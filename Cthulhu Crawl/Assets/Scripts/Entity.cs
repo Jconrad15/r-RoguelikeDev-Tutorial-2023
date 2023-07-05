@@ -51,6 +51,8 @@ public class Entity : MonoBehaviour
         if (map.IsWalkable(targetX, targetY) == false) { return; }
 
         currentTarget = new Vector2(targetX, targetY);
+        x = (int)currentTarget.x;
+        y = (int)currentTarget.y;
         StartCoroutine(
             LerpMove(currentTarget));
     }
