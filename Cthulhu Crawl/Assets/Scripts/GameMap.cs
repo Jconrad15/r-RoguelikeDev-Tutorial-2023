@@ -22,7 +22,7 @@ public class GameMap
                 y == 0 || y == height -1)
             {
                 tiles[i] = new Tile(TileType.Wall);
-                Debug.Log("Create wall");
+                continue;
             }
 
             tiles[i] = new Tile(TileType.Floor);
@@ -45,8 +45,6 @@ public class GameMap
 
     public int GetIndex(int x, int y)
     {
-        Debug.Log(x + ", " + y);
-        Debug.Log(y * width + x);
         return y * width + x;
     }
 
