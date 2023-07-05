@@ -16,16 +16,8 @@ public class GameMap
         tiles = new Tile[width * height];
         for (int i = 0; i < tiles.Length; i++)
         {
-            (int x, int y) = GetPosition(i);
-
-            if (x == 0 || x == width - 1 ||
-                y == 0 || y == height - 1)
-            {
-                tiles[i] = new Tile(TileType.Wall);
-                continue;
-            }
-
-            tiles[i] = new Tile(TileType.Floor);
+            //(int x, int y) = GetPosition(i);
+            tiles[i] = new Tile(TileType.Wall);
         }
     }
 

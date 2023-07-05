@@ -32,7 +32,7 @@ public class Main : MonoBehaviour
     {
         int mapWidth = 30;
         int mapHeight = 20;
-        gameMap = new GameMap(mapWidth, mapHeight);
+        gameMap = ProcGen.GenerateDungeon(mapWidth, mapHeight);
         mapVisuals.UpdateVisuals(gameMap);
     }
 
