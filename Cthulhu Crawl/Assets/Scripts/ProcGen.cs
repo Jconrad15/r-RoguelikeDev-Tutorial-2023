@@ -14,20 +14,30 @@ public static class ProcGen
 
         CarveRoom(newMap, room1.Inner);
         CarveRoom(newMap, room2.Inner);
+        TunnelBetween(newMap, room1.Center, room2.Center);
 
         return newMap;
     }
 
     private static void CarveRoom(
-        GameMap newMap, List<(int, int)> locations)
+        GameMap map, List<(int, int)> locations)
     {
         for (int i = 0; i < locations.Count; i++)
         {
             int x = locations[i].Item1;
             int y = locations[i].Item2;
 
-            int index = newMap.GetIndex(x, y);
-            newMap.tiles[index] = new Tile(TileType.Floor);
+            int index = map.GetIndex(x, y);
+            map.tiles[index] = new Tile(TileType.Floor);
         }
+    }
+
+    private static void TunnelBetween(
+        GameMap map, (int, int) start, (int, int) end)
+    {
+        List<(int, int)> locations =
+            BresenhamLine.GetLocationsAlongLine(start, end);
+
+        CarveRoom(map, locations);
     }
 }
