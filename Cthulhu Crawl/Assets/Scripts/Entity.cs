@@ -9,10 +9,14 @@ public class Entity : MonoBehaviour
     private Sprite image;
     private Color color;
     private bool isPlayer;
+    private GameMap map;
 
     public void Init(
-        int x, int y, Sprite image, Color color, bool isPlayer = false)
+        int x, int y, Sprite image, Color color,
+        GameMap map, bool isPlayer = false)
     {
+        this.map = map;
+
         this.x = x;
         this.y = y;
         transform.position = new Vector3(x, y, 0);
@@ -29,8 +33,12 @@ public class Entity : MonoBehaviour
 
     public void Move(int dx, int dy)
     {
-        x += dx;
-        y += dy;
+        int targetX = x + dx;
+        int targetY = y + dy;
+        if (map.IsWalkable(targetX, targetY) == false) { return; }
+
+        x = targetX;
+        y = targetY;
         transform.position = new Vector3(x, y, 0);
     }
 

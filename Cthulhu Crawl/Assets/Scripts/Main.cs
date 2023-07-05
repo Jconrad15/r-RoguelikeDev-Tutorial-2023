@@ -13,20 +13,38 @@ public class Main : MonoBehaviour
     private List<Entity> entities;
     private SpriteDatabase spriteDatabase;
 
+    private GameMap gameMap;
+    [SerializeField]
+    private MapVisuals mapVisuals;
+    
     private void Start()
     {
         spriteDatabase = FindAnyObjectByType<SpriteDatabase>();
         entities = new List<Entity>();
 
+        InitializeMap();
+
         CreatePlayer();
         CreateEntity();
+    }
+
+    private void InitializeMap()
+    {
+        int mapWidth = 30;
+        int mapHeight = 20;
+        gameMap = new GameMap(mapWidth, mapHeight);
+        mapVisuals.UpdateVisuals(gameMap);
     }
 
     private void CreatePlayer()
     {
         Entity player = Instantiate(prefab, entityGOContainer.transform);
         player.Init(
-            0, 0, spriteDatabase.GetPlayerSprite(), Color.white, true);
+            10, 5,
+            spriteDatabase.GetPlayerSprite(),
+            Color.white,
+            gameMap,
+            true);
         _ = player.AddComponent<PlayerController>();
         entities.Add(player);
     }
@@ -35,7 +53,10 @@ public class Main : MonoBehaviour
     {
         Entity entity = Instantiate(prefab, entityGOContainer.transform);
         entity.Init(
-            2, 2, spriteDatabase.GetEnemySprite(), Color.red);
+            2, 2,
+            spriteDatabase.GetEnemySprite(),
+            Color.red,
+            gameMap);
         entities.Add(entity);
     }
 }
