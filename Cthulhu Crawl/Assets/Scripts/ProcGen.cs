@@ -1,21 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class ProcGen
 {
 
-    public static GameMap GenerateDungeon(int width, int height)
+    public static GameMap GenerateDungeon(
+        int width, int height,
+        int maxRooms, int roomMinSize, int roomMaxSize)
     {
         GameMap newMap = new GameMap(width, height);
 
-        RectangularRoom room1 = new RectangularRoom(0, 1, 15, 5);
-        RectangularRoom room2 = new RectangularRoom(20, 10, 6, 7);
+        List<RectangularRoom> rooms = new List<RectangularRoom>();
+        for (int i = 0; i < maxRooms; i++)
+        {
+            int roomWidth = Random.Range(roomMinSize, roomMaxSize);
+            int roomHeight = Random.Range(roomMinSize, roomMaxSize);
+            int x = Random.Range(0, width - roomWidth - 1);
+            int y = Random.Range(0, height - roomHeight - 1);
 
-        CarveRoom(newMap, room1.Inner);
-        CarveRoom(newMap, room2.Inner);
-        TunnelBetween(newMap, room1.Center, room2.Center);
+            RectangularRoom newRoom = new RectangularRoom(
+                x, y, roomWidth, roomHeight);
 
+            bool overlap = rooms.Any(r => r.Intersects(newRoom));
+            if (overlap) { continue; }
+
+            CarveRoom(newMap, newRoom.Inner);
+
+            if (rooms.Count == 0)
+            {
+                newMap.startingPosition = newRoom.Center;
+            }
+            else
+            {
+                TunnelBetween(
+                    newMap,
+                    rooms[rooms.Count - 1].Center,
+                    newRoom.Center);
+            }
+
+            rooms.Add(newRoom);
+        }
+
+        Debug.Log(rooms.Count);
         return newMap;
     }
 

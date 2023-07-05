@@ -7,6 +7,7 @@ public class GameMap
     public int width;
     public int height;
     public Tile[] tiles;
+    public (int, int) startingPosition;
 
     public GameMap(int width, int height)
     {

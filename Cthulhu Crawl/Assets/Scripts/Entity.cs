@@ -20,13 +20,13 @@ public class Entity : MonoBehaviour
     private Vector2 currentTarget;
 
     public void Init(
-        int x, int y, Sprite image, Color color,
+        (int, int) startingPosition, Sprite image, Color color,
         GameMap map, bool isPlayer = false)
     {
         this.map = map;
 
-        this.x = x;
-        this.y = y;
+        x = startingPosition.Item1;
+        y = startingPosition.Item2;
         transform.position = new Vector3(x, y, 0);
 
         this.image = image;
@@ -38,6 +38,13 @@ public class Entity : MonoBehaviour
         this.isPlayer = isPlayer;
 
         currentTarget = new Vector2(x, y);
+    }
+
+    public void SetStartingPosition((int, int) pos)
+    {
+        x = pos.Item1;
+        y = pos.Item2;
+        SetToTargetPos();
     }
 
     public void Move(int dx, int dy)

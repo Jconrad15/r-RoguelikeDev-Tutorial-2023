@@ -55,5 +55,13 @@ public class RectangularRoom
         y2 = y + height;
     }
 
+    public bool Intersects(RectangularRoom otherRoom)
+    {
+        return x1 <= otherRoom.x2
+            && x2 >= otherRoom.x1
+            && y1 <= otherRoom.y2
+            && y2 >= otherRoom.y1;
+    }
+
 
 }

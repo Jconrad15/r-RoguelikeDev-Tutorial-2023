@@ -32,7 +32,10 @@ public class Main : MonoBehaviour
     {
         int mapWidth = 30;
         int mapHeight = 20;
-        gameMap = ProcGen.GenerateDungeon(mapWidth, mapHeight);
+        int roomMaxSize = 10;
+        int roomMinSize = 3;
+        int maxRooms = 15;
+        gameMap = ProcGen.GenerateDungeon(mapWidth, mapHeight, maxRooms, roomMinSize, roomMaxSize);
         mapVisuals.UpdateVisuals(gameMap);
     }
 
@@ -40,7 +43,7 @@ public class Main : MonoBehaviour
     {
         Entity player = Instantiate(prefab, entityGOContainer.transform);
         player.Init(
-            10, 5,
+            gameMap.startingPosition,
             spriteDatabase.GetPlayerSprite(),
             ColorPalette.b1,
             gameMap,
@@ -53,7 +56,7 @@ public class Main : MonoBehaviour
     {
         Entity entity = Instantiate(prefab, entityGOContainer.transform);
         entity.Init(
-            2, 2,
+            (2, 2),
             spriteDatabase.GetEnemySprite(),
             ColorPalette.r2,
             gameMap);
