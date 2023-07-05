@@ -19,7 +19,7 @@ public class GameMap
             (int x, int y) = GetPosition(i);
 
             if (x == 0 || x == width - 1 ||
-                y == 0 || y == height -1)
+                y == 0 || y == height - 1)
             {
                 tiles[i] = new Tile(TileType.Wall);
                 continue;

@@ -42,7 +42,7 @@ public class Main : MonoBehaviour
         player.Init(
             10, 5,
             spriteDatabase.GetPlayerSprite(),
-            Color.white,
+            ColorPalette.b1,
             gameMap,
             true);
         _ = player.AddComponent<PlayerController>();
@@ -55,7 +55,7 @@ public class Main : MonoBehaviour
         entity.Init(
             2, 2,
             spriteDatabase.GetEnemySprite(),
-            Color.red,
+            ColorPalette.r2,
             gameMap);
         entities.Add(entity);
     }

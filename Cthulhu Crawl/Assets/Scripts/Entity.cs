@@ -6,6 +6,9 @@ public class Entity : MonoBehaviour
 {
     private int movementIncrements = 30;
 
+    [SerializeField]
+    SpriteRenderer sr;
+
     private int x;
     private int y;
     private Sprite image;
@@ -27,7 +30,6 @@ public class Entity : MonoBehaviour
         transform.position = new Vector3(x, y, 0);
 
         this.image = image;
-        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         sr.sprite = image;
 
         this.color = color;
@@ -51,7 +53,7 @@ public class Entity : MonoBehaviour
         if (map.IsWalkable(targetX, targetY) == false) { return; }
 
         currentTarget = new Vector2(targetX, targetY);
-        x = (int)currentTarget.x;
+                x = (int)currentTarget.x;
         y = (int)currentTarget.y;
         StartCoroutine(
             LerpMove(currentTarget));

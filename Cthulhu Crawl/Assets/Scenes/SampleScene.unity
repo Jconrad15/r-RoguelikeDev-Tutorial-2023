@@ -154,6 +154,55 @@ Transform:
   m_Father: {fileID: 2086863510}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &510953348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 510953350}
+  - component: {fileID: 510953349}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &510953349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510953348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 8e825e51a54516b4098751250c35f6c0, type: 2}
+--- !u!4 &510953350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510953348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3242671, y: 1.5894412, z: -0.019576985}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &515021680
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +308,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.101960786, g: 0.0627451, b: 0.08627451, a: 1}
+  m_BackGroundColor: {r: 0.19215687, g: 0.4862745, b: 0.5294118, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -330,7 +379,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -469,10 +518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae9299bd73b09843ae7e3f283e23ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSprite: {fileID: 1562139836, guid: e42cc12c0583f94498e25d648538d200, type: 3}
-  enemySprite: {fileID: -49099862, guid: e42cc12c0583f94498e25d648538d200, type: 3}
-  wallSprite: {fileID: 2086285822, guid: e42cc12c0583f94498e25d648538d200, type: 3}
-  floorSprite: {fileID: -379351975, guid: e42cc12c0583f94498e25d648538d200, type: 3}
+  playerSprite: {fileID: -2099460166, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
+  enemySprite: {fileID: 300257880, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
+  wallSprite: {fileID: -1845680687, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
+  floorSprite: {fileID: 1874830490, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
 --- !u!4 &588100185
 Transform:
   m_ObjectHideFlags: 0

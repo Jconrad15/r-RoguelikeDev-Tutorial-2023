@@ -11,18 +11,6 @@ public class Tile
     public Color backgroundColor;
     public TileType tileType;
 
-    public Tile(
-        bool walkable, bool transparent,
-        Color foregroundColor, Color backgroundColor,
-        TileType tileType)
-    {
-        this.walkable = walkable;
-        this.transparent = transparent;
-        this.foregroundColor = foregroundColor;
-        this.backgroundColor = backgroundColor;
-        this.tileType = tileType;
-    }
-
     public Tile(TileType tileType)
     {
         this.tileType = tileType;
@@ -32,14 +20,14 @@ public class Tile
             case TileType.Wall:
                 walkable = false;
                 transparent = false;
-                foregroundColor = Color.white;
+                foregroundColor = ColorPalette.b4;
                 backgroundColor = Color.black;
                 break;
 
             case TileType.Floor:
                 walkable = true;
                 transparent = true;
-                foregroundColor = Color.white;
+                foregroundColor = ColorPalette.r1;
                 backgroundColor = Color.black;
                 break;
         }

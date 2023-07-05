@@ -33,6 +33,7 @@ public class MapVisuals : MonoBehaviour
 
         SpriteRenderer sr = newTileGO.AddComponent<SpriteRenderer>();
         sr.sprite = spriteDatabase.GetTile(tile.tileType);
+        sr.color = tile.foregroundColor;
 
     }
 }
