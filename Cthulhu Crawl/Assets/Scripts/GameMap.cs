@@ -8,6 +8,7 @@ public class GameMap
     public int height;
     public Tile[] tiles;
     public (int, int) startingPosition;
+    public List<RectangularRoom> rooms;
 
     public GameMap(int width, int height)
     {

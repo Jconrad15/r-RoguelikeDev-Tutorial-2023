@@ -35,12 +35,9 @@ public class Main : MonoBehaviour
     {
         int mapWidth = 30;
         int mapHeight = 20;
-        int roomMaxSize = 10;
-        int roomMinSize = 3;
-        int maxRooms = 30;
+        int roomMinSize = 4;
         gameMap = ProcGen.GenerateDungeon(
-            mapWidth, mapHeight, maxRooms, roomMinSize, roomMaxSize,
-            seed);
+            mapWidth, mapHeight, roomMinSize, seed);
         mapVisuals.UpdateVisuals(gameMap);
     }
 
