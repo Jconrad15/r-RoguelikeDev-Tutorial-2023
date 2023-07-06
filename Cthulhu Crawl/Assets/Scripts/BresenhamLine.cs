@@ -6,17 +6,11 @@ public static class BresenhamLine
     public static List<(int, int)> GetLocationsAlongLine(
         (int, int) start, (int, int) end)
     {
-        List<(int, int)> positions = new List<(int, int)>();
-
-        int x0 = start.Item1;
-        int y0 = start.Item2;
-        int x1 = end.Item1;
-        int y1 = end.Item2;
-
-        return LineNoDiag(x0, y0, x1, y1);
+        return LineNoDiagonal(
+            start.Item1, start.Item2, end.Item1, end.Item2);
     }
 
-    public static List<(int, int)> LineNoDiag(
+    private static List<(int, int)> LineNoDiagonal(
         int x0, int y0, int x1, int y1)
     {
         List<(int, int)> positions = new List<(int, int)>();

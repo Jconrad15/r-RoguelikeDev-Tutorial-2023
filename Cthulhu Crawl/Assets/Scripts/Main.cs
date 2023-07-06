@@ -16,11 +16,14 @@ public class Main : MonoBehaviour
     private GameMap gameMap;
     [SerializeField]
     private MapVisuals mapVisuals;
-    
+
+    private int seed;
+
     private void Start()
     {
         spriteDatabase = FindAnyObjectByType<SpriteDatabase>();
         entities = new List<Entity>();
+        seed = Random.Range(-10000, 10000);
 
         InitializeMap();
 
@@ -34,8 +37,10 @@ public class Main : MonoBehaviour
         int mapHeight = 20;
         int roomMaxSize = 10;
         int roomMinSize = 3;
-        int maxRooms = 15;
-        gameMap = ProcGen.GenerateDungeon(mapWidth, mapHeight, maxRooms, roomMinSize, roomMaxSize);
+        int maxRooms = 30;
+        gameMap = ProcGen.GenerateDungeon(
+            mapWidth, mapHeight, maxRooms, roomMinSize, roomMaxSize,
+            seed);
         mapVisuals.UpdateVisuals(gameMap);
     }
 

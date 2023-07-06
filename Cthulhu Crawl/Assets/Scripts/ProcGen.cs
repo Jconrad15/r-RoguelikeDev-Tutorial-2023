@@ -8,10 +8,29 @@ public static class ProcGen
 
     public static GameMap GenerateDungeon(
         int width, int height,
-        int maxRooms, int roomMinSize, int roomMaxSize)
+        int maxRooms, int roomMinSize, int roomMaxSize,
+        int seed)
     {
+        // Create seed based state
+        Random.State oldState = Random.state;
+        Random.InitState(seed);
+
         GameMap newMap = new GameMap(width, height);
 
+        GenerateRoomsAndHallways(
+            width, height, maxRooms,
+            roomMinSize, roomMaxSize, newMap);
+
+        // Restore state
+        Random.state = oldState;
+
+        return newMap;
+    }
+
+    private static void GenerateRoomsAndHallways(
+        int width, int height, int maxRooms,
+        int roomMinSize, int roomMaxSize, GameMap newMap)
+    {
         List<RectangularRoom> rooms = new List<RectangularRoom>();
         for (int i = 0; i < maxRooms; i++)
         {
@@ -43,8 +62,13 @@ public static class ProcGen
             rooms.Add(newRoom);
         }
 
+        // Hallway between first and last
+        TunnelBetween(
+            newMap,
+            rooms[rooms.Count - 1].Center,
+            rooms[0].Center);
+
         Debug.Log(rooms.Count);
-        return newMap;
     }
 
     private static void CarveRoom(
