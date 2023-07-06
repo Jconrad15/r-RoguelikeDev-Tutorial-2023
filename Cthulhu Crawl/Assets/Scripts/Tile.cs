@@ -22,7 +22,7 @@ public class Tile
             case TileType.Wall:
                 walkable = false;
                 transparent = false;
-                foregroundColor = ColorPalette.b4;
+                foregroundColor = ColorPalette.r3;
                 backgroundColor = Color.black;
                 break;
 
