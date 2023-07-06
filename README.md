@@ -8,4 +8,7 @@ The art assets are created by Kenney and can be found at https://kenney.nl/asset
 # Parts 0-2 Setting up generic entities, map, and movement
 ![PlayerMovement](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/PlayerMovement.gif)
 
+# Part 3 Generating a dungeon
+![DungeonGeneration](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/DungeonGeneration.gif)
+
 
