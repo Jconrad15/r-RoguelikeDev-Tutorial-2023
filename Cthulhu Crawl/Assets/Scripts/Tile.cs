@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public enum TileType { Wall, Floor };
+public enum TileVisibility { Visible, NotVisible, PreviouslySeen };
 public class Tile
 {
     public bool walkable;
@@ -8,10 +9,13 @@ public class Tile
     public Color foregroundColor;
     public Color backgroundColor;
     public TileType tileType;
+    public TileVisibility visibility;
+    public (int, int) position;
 
-    public Tile(TileType tileType)
+    public Tile(TileType tileType, (int, int) position)
     {
         this.tileType = tileType;
+        visibility = TileVisibility.NotVisible;
 
         switch (tileType)
         {
@@ -29,5 +33,7 @@ public class Tile
                 backgroundColor = Color.black;
                 break;
         }
+
+        this.position = position;
     }
 }

@@ -11,6 +11,8 @@ public class Main : MonoBehaviour
     private GameObject entityGOContainer;
 
     private List<Entity> entities;
+    private Entity player;
+
     private SpriteDatabase spriteDatabase;
 
     private GameMap gameMap;
@@ -29,6 +31,8 @@ public class Main : MonoBehaviour
 
         CreatePlayer();
         CreateEntities();
+
+        mapVisuals.InitializeVisuals(player);
     }
 
     private void InitializeMap()
@@ -38,12 +42,11 @@ public class Main : MonoBehaviour
         int roomMinSize = 4;
         gameMap = ProcGen.GenerateDungeon(
             mapWidth, mapHeight, roomMinSize, seed);
-        mapVisuals.UpdateVisuals(gameMap);
     }
 
     private void CreatePlayer()
     {
-        Entity player = Instantiate(prefab, entityGOContainer.transform);
+        player = Instantiate(prefab, entityGOContainer.transform);
         player.Init(
             gameMap.startingPosition,
             spriteDatabase.GetPlayerSprite(),
@@ -67,5 +70,10 @@ public class Main : MonoBehaviour
                 gameMap);
             entities.Add(entity);
         }
+    }
+
+    public GameMap GetMap()
+    {
+        return gameMap;
     }
 }

@@ -217,7 +217,7 @@ public static class ProcGen
             int y = locations[i].Item2;
 
             int index = map.GetIndex(x, y);
-            map.tiles[index] = new Tile(TileType.Floor);
+            map.tiles[index] = new Tile(TileType.Floor, (x, y));
         }
     }
 

@@ -18,8 +18,8 @@ public class GameMap
         tiles = new Tile[width * height];
         for (int i = 0; i < tiles.Length; i++)
         {
-            //(int x, int y) = GetPosition(i);
-            tiles[i] = new Tile(TileType.Wall);
+            (int, int) pos = GetPosition(i);
+            tiles[i] = new Tile(TileType.Wall, pos);
         }
     }
 
@@ -69,4 +69,5 @@ public class GameMap
         Random.state = oldState;
         return location;
     }
+
 }

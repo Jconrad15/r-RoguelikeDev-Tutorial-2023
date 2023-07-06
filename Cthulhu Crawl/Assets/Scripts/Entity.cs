@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    private Action<Entity> cbOnMove;
+
     private int movementIncrements = 30;
 
     [SerializeField]
@@ -62,6 +65,9 @@ public class Entity : MonoBehaviour
         currentTarget = new Vector2(targetX, targetY);
                 x = (int)currentTarget.x;
         y = (int)currentTarget.y;
+
+        cbOnMove?.Invoke(this);
+
         StartCoroutine(
             LerpMove(currentTarget));
     }
@@ -89,5 +95,20 @@ public class Entity : MonoBehaviour
         y = (int)currentTarget.y;
         transform.position = currentTarget;
         isMoving = false;
+    }
+
+    public (int, int) GetPosition()
+    {
+        return (x, y);
+    }
+
+    public void RegisterOnMove(Action<Entity> callbackfunc)
+    {
+        cbOnMove += callbackfunc;
+    }
+
+    public void UnregisterOnMove(Action<Entity> callbackfunc)
+    {
+        cbOnMove -= callbackfunc;
     }
 }
