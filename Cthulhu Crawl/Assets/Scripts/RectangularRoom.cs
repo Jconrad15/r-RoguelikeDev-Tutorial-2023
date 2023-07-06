@@ -20,10 +20,21 @@ public class RectangularRoom
         }
     }
 
-    public (int, int) GetRandomPosition()
+    public (int, int) GetRandomPosition(int seed)
     {
+        // Create seed based state
+        Random.State oldState = Random.state;
+        Random.InitState(seed);
+
         List<(int, int)> locations = Inner;
-        return locations[Random.Range(0, locations.Count)];
+
+        (int, int) selectedLocation =
+            locations[Random.Range(0, locations.Count)];
+
+        // Restore state
+        Random.state = oldState;
+
+        return selectedLocation;
     }
 
     public List<(int, int)> Inner

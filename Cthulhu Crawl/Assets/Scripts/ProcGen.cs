@@ -5,9 +5,7 @@ public static class ProcGen
 {
 
     public static GameMap GenerateDungeon(
-        int width, int height,
-        int roomMinSize,
-        int seed)
+        int width, int height, int roomMinSize, int seed)
     {
         // Create seed based state
         Random.State oldState = Random.state;
@@ -15,9 +13,8 @@ public static class ProcGen
 
         GameMap newMap = new GameMap(width, height);
 
-        GenerateRoomsAndHallways(
-            width, height,
-            roomMinSize, newMap);
+        CreateRooms(roomMinSize, newMap, width, height);
+        CreateHallways(newMap, seed);
 
         // Restore state
         Random.state = oldState;
@@ -25,13 +22,30 @@ public static class ProcGen
         return newMap;
     }
 
-    private static void GenerateRoomsAndHallways(
-        int width, int height,
-        int roomMinSize, GameMap newMap)
+    private static void CreateHallways(GameMap newMap, int seed)
+    {
+        // Tunnel between rooms
+        for (int i = 1; i < newMap.rooms.Count; i++)
+        {
+            TunnelBetween(
+                newMap,
+                newMap.rooms[i].GetRandomPosition(seed),
+                newMap.rooms[i - 1].GetRandomPosition(seed));
+        }
+        // Tunnel first to last
+        TunnelBetween(
+            newMap,
+            newMap.rooms[newMap.rooms.Count - 1].GetRandomPosition(seed),
+            newMap.rooms[0].GetRandomPosition(seed));
+    }
+
+    private static void CreateRooms(
+        int roomMinSize, GameMap newMap, int width, int height)
     {
         List<RectangularRoom> rooms = new List<RectangularRoom>();
 
-        BinaryTree tree = CreatePartitionTree(width, height, roomMinSize);
+        BinaryTree tree = CreateMapPartitionTree(
+            width, height, roomMinSize);
 
         Queue<Node> toDoNodes = new Queue<Node>();
         toDoNodes.Enqueue(tree.rootNode);
@@ -65,7 +79,7 @@ public static class ProcGen
             while (roomAreaDetermined == false)
             {
                 // Exit if smallest room possible
-                if (roomWidth <= roomMinSize && 
+                if (roomWidth <= roomMinSize &&
                     roomHeight <= roomMinSize)
                 {
                     roomAreaDetermined = true;
@@ -112,25 +126,10 @@ public static class ProcGen
             rooms.Add(room);
         }
 
-        // Tunnel between rooms
-        for (int i = 1; i < rooms.Count; i++)
-        {
-            TunnelBetween(
-                newMap,
-                rooms[i].GetRandomPosition(),
-                rooms[i - 1].GetRandomPosition());
-        }
-        // Tunnel first to last
-        TunnelBetween(
-            newMap,
-            rooms[rooms.Count - 1].GetRandomPosition(),
-            rooms[0].GetRandomPosition());
-
-        Debug.Log(rooms.Count);
         newMap.rooms = rooms;
     }
 
-    private static BinaryTree CreatePartitionTree(
+    private static BinaryTree CreateMapPartitionTree(
         int width, int height, int roomMinSize)
     {
         BinaryTree tree = new BinaryTree(
