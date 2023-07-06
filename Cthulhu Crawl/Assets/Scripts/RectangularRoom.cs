@@ -23,6 +23,7 @@ public class RectangularRoom
     public (int, int) GetRandomPosition(int seed)
     {
         // Create seed based state
+        seed += x1 + x2 + y1 + y2;
         Random.State oldState = Random.state;
         Random.InitState(seed);
 
@@ -79,6 +80,5 @@ public class RectangularRoom
             && y1 <= otherRoom.y2
             && y2 >= otherRoom.y1;
     }
-
 
 }

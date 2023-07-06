@@ -28,7 +28,7 @@ public class Main : MonoBehaviour
         InitializeMap();
 
         CreatePlayer();
-        CreateEntity();
+        CreateEntities();
     }
 
     private void InitializeMap()
@@ -54,14 +54,18 @@ public class Main : MonoBehaviour
         entities.Add(player);
     }
 
-    private void CreateEntity()
+    private void CreateEntities()
     {
-        Entity entity = Instantiate(prefab, entityGOContainer.transform);
-        entity.Init(
-            (2, 2),
-            spriteDatabase.GetEnemySprite(),
-            ColorPalette.r2,
-            gameMap);
-        entities.Add(entity);
+        for (int i = 0; i < 3; i++)
+        {
+            Entity entity = Instantiate(
+                prefab, entityGOContainer.transform);
+            entity.Init(
+                gameMap.GetRandomFloorTile(seed + i),
+                spriteDatabase.GetEnemySprite(),
+                ColorPalette.r2,
+                gameMap);
+            entities.Add(entity);
+        }
     }
 }

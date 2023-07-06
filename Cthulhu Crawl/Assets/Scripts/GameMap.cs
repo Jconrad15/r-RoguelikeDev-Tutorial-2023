@@ -48,4 +48,25 @@ public class GameMap
         int y = index / width;
         return (x, y);
     }
+
+    public (int, int) GetRandomFloorTile(int seed)
+    {
+        // Create seed based state
+        Random.State oldState = Random.state;
+        Random.InitState(seed);
+
+        List<(int, int)> floorTiles = new List<(int, int)>();
+
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            floorTiles.AddRange(rooms[i].Inner);
+        }
+
+        (int, int) location =
+            floorTiles[Random.Range(0, floorTiles.Count)];
+
+        // Restore state
+        Random.state = oldState;
+        return location;
+    }
 }
