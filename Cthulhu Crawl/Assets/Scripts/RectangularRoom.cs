@@ -20,6 +20,12 @@ public class RectangularRoom
         }
     }
 
+    public (int, int) GetRandomPosition()
+    {
+        List<(int, int)> locations = Inner;
+        return locations[Random.Range(0, locations.Count)];
+    }
+
     public List<(int, int)> Inner
     {
         get

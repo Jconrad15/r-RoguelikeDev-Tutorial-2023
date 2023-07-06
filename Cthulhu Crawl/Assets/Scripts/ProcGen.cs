@@ -117,14 +117,14 @@ public static class ProcGen
         {
             TunnelBetween(
                 newMap,
-                rooms[i].Center,
-                rooms[i - 1].Center);
+                rooms[i].GetRandomPosition(),
+                rooms[i - 1].GetRandomPosition());
         }
         // Tunnel first to last
         TunnelBetween(
             newMap,
-            rooms[rooms.Count - 1].Center,
-            rooms[0].Center);
+            rooms[rooms.Count - 1].GetRandomPosition(),
+            rooms[0].GetRandomPosition());
 
         Debug.Log(rooms.Count);
         newMap.rooms = rooms;
