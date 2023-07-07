@@ -1,19 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Main : MonoBehaviour
 {
     [SerializeField]
-    private Entity prefab;
-    [SerializeField]
-    private GameObject entityGOContainer;
-
-    private List<Entity> entities;
-    private Entity player;
-
-    private SpriteDatabase spriteDatabase;
+    private EntityManager entityManager;
 
     private GameMap gameMap;
     [SerializeField]
@@ -23,16 +15,12 @@ public class Main : MonoBehaviour
 
     private void Start()
     {
-        spriteDatabase = FindAnyObjectByType<SpriteDatabase>();
-        entities = new List<Entity>();
         seed = Random.Range(-10000, 10000);
 
         InitializeMap();
+        entityManager.InitializeEntities(gameMap, seed);
 
-        CreatePlayer();
-        CreateEntities();
-
-        mapVisuals.InitializeVisuals(player);
+        mapVisuals.InitializeVisuals();
     }
 
     private void InitializeMap()
@@ -42,34 +30,6 @@ public class Main : MonoBehaviour
         int roomMinSize = 4;
         gameMap = ProcGen.GenerateDungeon(
             mapWidth, mapHeight, roomMinSize, seed);
-    }
-
-    private void CreatePlayer()
-    {
-        player = Instantiate(prefab, entityGOContainer.transform);
-        player.Init(
-            gameMap.startingPosition,
-            spriteDatabase.GetPlayerSprite(),
-            ColorPalette.b1,
-            gameMap,
-            true);
-        _ = player.AddComponent<PlayerController>();
-        entities.Add(player);
-    }
-
-    private void CreateEntities()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            Entity entity = Instantiate(
-                prefab, entityGOContainer.transform);
-            entity.Init(
-                gameMap.GetRandomFloorTile(seed + i),
-                spriteDatabase.GetEnemySprite(),
-                ColorPalette.r2,
-                gameMap);
-            entities.Add(entity);
-        }
     }
 
     public GameMap GetMap()

@@ -16,12 +16,14 @@ public class MapVisuals : MonoBehaviour
         spriteDatabase = FindAnyObjectByType<SpriteDatabase>();
     }
 
-    public void InitializeVisuals(Entity player)
+    public void InitializeVisuals()
     {
-        player.RegisterOnMove(UpdateVisuals);
+        EntityManager em = FindAnyObjectByType<EntityManager>();
+
+        em.Player.RegisterOnMove(UpdateVisuals);
         GameMap map = main.GetMap();
         FOVRecursive.DetermineVisibleTiles(
-            map, player.GetPosition(), 6);
+            map, em.Player.GetPosition(), 6);
 
         tileGOs = new GameObject[map.tiles.Length];
         for (int i = 0; i < map.tiles.Length; i++)
