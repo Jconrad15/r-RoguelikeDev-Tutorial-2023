@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class GameMap
 {
-    public int width;
-    public int height;
+    public int Width { get; private set; }
+    public int Height { get; private set; }
     public Tile[] tiles;
     public (int, int) startingPosition;
     public List<RectangularRoom> rooms;
+    public Path_TileGraph TileGraph { get; private set; }
 
     public GameMap(int width, int height)
     {
-        this.width = width;
-        this.height = height;
+        Width = width;
+        Height = height;
         
         tiles = new Tile[width * height];
         for (int i = 0; i < tiles.Length; i++)
@@ -25,7 +26,7 @@ public class GameMap
 
     public bool InBounds(int x, int y)
     {
-        return x >= 0 && x < width && y >= 0 && y < height;
+        return x >= 0 && x < Width && y >= 0 && y < Height;
     }
 
     public bool IsWalkable(int x, int y)
@@ -39,17 +40,17 @@ public class GameMap
 
     public int GetIndex(int x, int y)
     {
-        return y * width + x;
+        return y * Width + x;
     }
 
     public (int, int) GetPosition(int index)
     {
-        int x = index % width;
-        int y = index / width;
+        int x = index % Width;
+        int y = index / Width;
         return (x, y);
     }
 
-    public (int, int) GetRandomFloorTile(int seed)
+    public (int, int) GetRandomFloorPosition(int seed)
     {
         // Create seed based state
         Random.State oldState = Random.state;
@@ -68,6 +69,37 @@ public class GameMap
         // Restore state
         Random.state = oldState;
         return location;
+    }
+
+    public Tile TryGetTileAtCoord(int x, int y)
+    {
+        if (InBounds(x, y) == false) { return null; }
+        return tiles[GetIndex(x, y)];
+    }
+
+    public Tile TryGetTileAtCoord((int, int) position)
+    {
+        return TryGetTileAtCoord(position.Item1, position.Item2);
+    }
+
+    public void UpdateTileGraph()
+    {
+        TileGraph = new Path_TileGraph(this);
+    }
+
+    public Tile[] GetTileNeighbors((int, int) position)
+    {
+        int x = position.Item1;
+        int y = position.Item2;
+        Tile[] neighbors = new Tile[4]
+        {
+            TryGetTileAtCoord(x, y + 1), // N
+            TryGetTileAtCoord(x + 1, y), // E
+            TryGetTileAtCoord(x, y - 1), // S
+            TryGetTileAtCoord(x - 1, y)  // W
+        };
+
+        return neighbors;
     }
 
 }

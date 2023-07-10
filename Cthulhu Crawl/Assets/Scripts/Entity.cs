@@ -21,8 +21,8 @@ public class Entity : MonoBehaviour
     private int y;
     private Color color;
     public bool IsPlayer { get; private set; }
-    private bool blocksMovement;
-    private GameMap map;
+    public bool BlocksMovement { get; private set; }
+    public GameMap Map { get; private set; }
     private string entityName;
 
     private bool isMoving = false;
@@ -34,12 +34,12 @@ public class Entity : MonoBehaviour
         bool isPlayer = false)
     {
         this.entityManager = entityManager;
-        this.map = map;
+        Map = map;
         IsPlayer = isPlayer;
         entitySR.sprite = entitySO.sprite;
         color = entitySO.color;
         entitySR.color = color;
-        blocksMovement = entitySO.blocksMovement;
+        BlocksMovement = entitySO.blocksMovement;
         entityName = entitySO.name;
 
         x = startingPosition.Item1;
@@ -89,7 +89,7 @@ public class Entity : MonoBehaviour
 
         int targetX = x + dx;
         int targetY = y + dy;
-        if (map.IsWalkable(targetX, targetY) == false) { return; }
+        if (Map.IsWalkable(targetX, targetY) == false) { return; }
 
         Entity targetTileEntity = 
             entityManager.GetEntityAtLocation(targetX, targetY);
@@ -146,7 +146,7 @@ public class Entity : MonoBehaviour
 
     public void UpdateVisibilityColor()
     {
-        TileVisibility v = map.tiles[map.GetIndex(x, y)].visibility;
+        TileVisibility v = Map.tiles[Map.GetIndex(x, y)].visibility;
 
         Color selectedColor = color;
         Color bgColor = backgroundSR.color;

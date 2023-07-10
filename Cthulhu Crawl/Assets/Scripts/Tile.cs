@@ -11,6 +11,7 @@ public class Tile
     public TileType tileType;
     public TileVisibility visibility;
     public (int, int) position;
+    public bool isWalkable;
 
     public Tile(TileType tileType, (int, int) position)
     {
@@ -24,6 +25,7 @@ public class Tile
                 transparent = false;
                 foregroundColor = ColorPalette.r3;
                 backgroundColor = Color.black;
+                isWalkable = false;
                 break;
 
             case TileType.Floor:
@@ -31,6 +33,7 @@ public class Tile
                 transparent = true;
                 foregroundColor = ColorPalette.r1;
                 backgroundColor = Color.black;
+                isWalkable = true;
                 break;
         }
 

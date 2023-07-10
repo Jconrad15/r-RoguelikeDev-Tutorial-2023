@@ -11,11 +11,12 @@ public class EntityManager : MonoBehaviour
     private SpriteDatabase spriteDatabase;
     private List<Entity> entities;
     public Entity Player { get; private set; }
-
+    private GameMap gameMap;
     private EntityDatabase entityDatabase;
 
     public void InitializeEntities(GameMap gameMap, int seed)
     {
+        this.gameMap = gameMap;
         entityDatabase = FindAnyObjectByType<EntityDatabase>();
         entities = new List<Entity>();
         CreatePlayer(gameMap);
@@ -60,6 +61,10 @@ public class EntityManager : MonoBehaviour
                     this);
             }
 
+            // Add AI component to the entity
+            AI ai = entity.AddComponent<AI>();
+            ai.Init(entity);
+
             entities.Add(entity);
         }
     }
@@ -87,14 +92,33 @@ public class EntityManager : MonoBehaviour
         return null;
     }
 
+    public Entity GetEntityAtLocation((int, int) targetPos)
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            (int x, int y) = entities[i].GetPosition();
+            if (x == targetPos.Item1 &&
+                y == targetPos.Item2)
+            {
+                return entities[i];
+            }
+        }
+
+        return null;
+    }
+
     public void HandleEntityTurns()
     {
         for (int i = 0; i < entities.Count; i++)
         {
             Entity e = entities[i];
-            if (e.IsPlayer) { continue; }
-
+            if (e.TryGetComponent(out AI ai) == false) { continue; }
             Debug.Log("Entity #" + i.ToString() + "'s turn.");
+
+            Tile playerTile = gameMap.TryGetTileAtCoord(
+                Player.GetPosition());
+
+            ai.GeneratePathToPlayer(playerTile);
         }
     }
 

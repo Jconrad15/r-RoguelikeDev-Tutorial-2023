@@ -130,9 +130,9 @@ public static class FOVRecursive
                 if (y < 0) return;
 
                 x = playerPos.Item1 + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
-                if (x >= map.width)
+                if (x >= map.Width)
                 {
-                    x = map.width - 1;
+                    x = map.Width - 1;
                 }
 
                 while (GetSlope(x, y, playerPos.Item1, playerPos.Item2, false) <= pEndSlope)
@@ -144,12 +144,12 @@ public static class FOVRecursive
 
                         if (tile.transparent == false)
                         {
-                            if (x + 1 < map.width && map.tiles[map.GetIndex(x + 1, y)].transparent == true)
+                            if (x + 1 < map.Width && map.tiles[map.GetIndex(x + 1, y)].transparent == true)
                                 ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, playerPos.Item1, playerPos.Item2, false), map, playerPos, visualRange, visibleTiles);
                         }
                         else
                         {
-                            if (x + 1 < map.width && map.tiles[map.GetIndex(x + 1, y)].transparent == false)
+                            if (x + 1 < map.Width && map.tiles[map.GetIndex(x + 1, y)].transparent == false)
                                 pStartSlope = -GetSlope(x + 0.5, y - 0.5, playerPos.Item1, playerPos.Item2, false);
                         }
                     }
@@ -161,7 +161,7 @@ public static class FOVRecursive
             case 3:
 
                 x = playerPos.Item1 + pDepth;
-                if (x >= map.width) return;
+                if (x >= map.Width) return;
 
                 y = playerPos.Item2 - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                 if (y < 0) y = 0;
@@ -194,10 +194,10 @@ public static class FOVRecursive
             case 4:
 
                 x = playerPos.Item1 + pDepth;
-                if (x >= map.width) return;
+                if (x >= map.Width) return;
 
                 y = playerPos.Item2 + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
-                if (y >= map.height) y = map.height - 1;
+                if (y >= map.Height) y = map.Height - 1;
 
                 while (GetSlope(x, y, playerPos.Item1, playerPos.Item2, true) >= pEndSlope)
                 {
@@ -209,12 +209,12 @@ public static class FOVRecursive
 
                         if (tile.transparent == false)
                         {
-                            if (y + 1 < map.height && map.tiles[map.GetIndex(x, y + 1)].transparent == true)
+                            if (y + 1 < map.Height && map.tiles[map.GetIndex(x, y + 1)].transparent == true)
                                 ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, playerPos.Item1, playerPos.Item2, true), map, playerPos, visualRange, visibleTiles);
                         }
                         else
                         {
-                            if (y + 1 < map.height && map.tiles[map.GetIndex(x, y + 1)].transparent == false)
+                            if (y + 1 < map.Height && map.tiles[map.GetIndex(x, y + 1)].transparent == false)
                                 pStartSlope = GetSlope(x + 0.5, y + 0.5, playerPos.Item1, playerPos.Item2, true);
 
                         }
@@ -227,10 +227,10 @@ public static class FOVRecursive
             case 5:
 
                 y = playerPos.Item2 + pDepth;
-                if (y >= map.height) return;
+                if (y >= map.Height) return;
 
                 x = playerPos.Item1 + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
-                if (x >= map.width) x = map.width - 1;
+                if (x >= map.Width) x = map.Width - 1;
 
                 while (GetSlope(x, y, playerPos.Item1, playerPos.Item2, false) >= pEndSlope)
                 {
@@ -241,12 +241,12 @@ public static class FOVRecursive
 
                         if (tile.transparent == false)
                         {
-                            if (x + 1 < map.height && map.tiles[map.GetIndex(x + 1, y)].transparent == true)
+                            if (x + 1 < map.Height && map.tiles[map.GetIndex(x + 1, y)].transparent == true)
                                 ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, playerPos.Item1, playerPos.Item2, false), map, playerPos, visualRange, visibleTiles);
                         }
                         else
                         {
-                            if (x + 1 < map.height
+                            if (x + 1 < map.Height
                                     && map.tiles[map.GetIndex(x + 1, y)].transparent == false)
                                 pStartSlope = GetSlope(x + 0.5, y + 0.5, playerPos.Item1, playerPos.Item2, false);
 
@@ -260,7 +260,7 @@ public static class FOVRecursive
             case 6:
 
                 y = playerPos.Item2 + pDepth;
-                if (y >= map.height) return;
+                if (y >= map.Height) return;
 
                 x = playerPos.Item1 - Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
                 if (x < 0) x = 0;
@@ -296,7 +296,7 @@ public static class FOVRecursive
                 if (x < 0) return;
 
                 y = playerPos.Item2 + Convert.ToInt32((pStartSlope * Convert.ToDouble(pDepth)));
-                if (y >= map.height) y = map.height - 1;
+                if (y >= map.Height) y = map.Height - 1;
 
                 while (GetSlope(x, y, playerPos.Item1, playerPos.Item2, true) <= pEndSlope)
                 {
@@ -308,12 +308,12 @@ public static class FOVRecursive
 
                         if (tile.transparent == false)
                         {
-                            if (y + 1 < map.height && map.tiles[map.GetIndex(x, y + 1)].transparent == true)
+                            if (y + 1 < map.Height && map.tiles[map.GetIndex(x, y + 1)].transparent == true)
                                 ScanOctant(pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, playerPos.Item1, playerPos.Item2, true), map, playerPos, visualRange, visibleTiles);
                         }
                         else
                         {
-                            if (y + 1 < map.height && map.tiles[map.GetIndex(x, y + 1)].transparent == false)
+                            if (y + 1 < map.Height && map.tiles[map.GetIndex(x, y + 1)].transparent == false)
                                 pStartSlope = -GetSlope(x - 0.5, y + 0.5, playerPos.Item1, playerPos.Item2, true);
                         }
                     }
@@ -358,13 +358,13 @@ public static class FOVRecursive
 
         if (x < 0)
             x = 0;
-        else if (x >= map.width)
-            x = map.width - 1;
+        else if (x >= map.Width)
+            x = map.Width - 1;
 
         if (y < 0)
             y = 0;
-        else if (y >= map.height)
-            y = map.height - 1;
+        else if (y >= map.Height)
+            y = map.Height - 1;
 
         if (pDepth < visualRange & map.tiles[map.GetIndex(x,y)].transparent == true)
             ScanOctant(pDepth + 1, pOctant, pStartSlope, pEndSlope, map, playerPos, visualRange, visibleTiles);
