@@ -8,22 +8,21 @@ public class MapVisuals : MonoBehaviour
     private GameObject[] tileGOs;
     private SpriteDatabase spriteDatabase;
     private Main main;
-
+    private EntityManager entityManager;
 
     private void Start()
     {
         main = FindAnyObjectByType<Main>();
         spriteDatabase = FindAnyObjectByType<SpriteDatabase>();
+        entityManager = FindAnyObjectByType<EntityManager>();
     }
 
     public void InitializeVisuals()
     {
-        EntityManager em = FindAnyObjectByType<EntityManager>();
-
-        em.Player.RegisterOnMove(UpdateVisuals);
+        entityManager.Player.RegisterOnEndMove(UpdateVisuals);
         GameMap map = main.GetMap();
         FOVRecursive.DetermineVisibleTiles(
-            map, em.Player.GetPosition(), 6);
+            map, entityManager.Player.GetPosition(), 6);
 
         tileGOs = new GameObject[map.tiles.Length];
         for (int i = 0; i < map.tiles.Length; i++)
@@ -31,6 +30,8 @@ public class MapVisuals : MonoBehaviour
             (int x, int y) = map.GetPosition(i);
             DrawNewTile(map.tiles[i], i, x, y);
         }
+
+        entityManager.UpdateEntityVisibility();
     }
 
     public void UpdateVisuals(Entity player)
@@ -41,13 +42,13 @@ public class MapVisuals : MonoBehaviour
 
         for (int i = 0; i < map.tiles.Length; i++)
         {
-            (int x, int y) = map.GetPosition(i);
-            UpdateTile(map.tiles[i], i, x, y);
+            UpdateTile(map.tiles[i], i);
         }
 
+        entityManager.UpdateEntityVisibility();
     }
 
-    private void UpdateTile(Tile tile, int index, int x, int y)
+    private void UpdateTile(Tile tile, int index)
     {
         GameObject tileGO = tileGOs[index];
         SpriteRenderer sr = tileGO.GetComponent<SpriteRenderer>();

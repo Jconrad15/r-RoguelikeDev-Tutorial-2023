@@ -32,7 +32,11 @@ public static class FOVRecursive
                 1, Octants[i], 1.0, 0.0,
                 map, playerPos, visibleRange, visibleTiles);
         }
-        SetTileVisibility(map, visibleTiles); 
+        // Add player tile
+        visibleTiles.Add(map.tiles[
+            map.GetIndex(playerPos.Item1, playerPos.Item2)]);
+
+        SetTileVisibility(map, visibleTiles);
     }
 
     private static void SetTileVisibility(

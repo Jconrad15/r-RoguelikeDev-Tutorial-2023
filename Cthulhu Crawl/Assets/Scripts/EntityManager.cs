@@ -9,14 +9,12 @@ public class EntityManager : MonoBehaviour
     private Entity entityPrefab;
     [SerializeField]
     private SpriteDatabase spriteDatabase;
-
     private List<Entity> entities;
     public Entity Player { get; private set; }
 
     public void InitializeEntities(GameMap gameMap, int seed)
     {
         entities = new List<Entity>();
-
         CreatePlayer(gameMap);
         CreateEntities(gameMap, seed);
     }
@@ -47,7 +45,16 @@ public class EntityManager : MonoBehaviour
                 spriteDatabase.GetEnemySprite(),
                 ColorPalette.r2,
                 gameMap);
+
             entities.Add(entity);
+        }
+    }
+
+    public void UpdateEntityVisibility()
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            entities[i].UpdateVisibilityColor();
         }
     }
 

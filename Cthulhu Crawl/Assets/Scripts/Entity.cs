@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    private Action<Entity> cbOnMove;
+    private Action<Entity> cbOnEndMove;
 
     private int movementIncrements = 30;
 
     [SerializeField]
-    SpriteRenderer sr;
+    private SpriteRenderer entitySR;
+    [SerializeField]
+    private SpriteRenderer backgroundSR;
 
     private int x;
     private int y;
-    private Sprite image;
     private Color color;
     private bool isPlayer;
     private GameMap map;
@@ -27,18 +28,14 @@ public class Entity : MonoBehaviour
         GameMap map, bool isPlayer = false)
     {
         this.map = map;
+        entitySR.sprite = image;
+        this.color = color;
+        entitySR.color = color;
+        this.isPlayer = isPlayer;
 
         x = startingPosition.Item1;
         y = startingPosition.Item2;
         transform.position = new Vector3(x, y, 0);
-
-        this.image = image;
-        sr.sprite = image;
-
-        this.color = color;
-        sr.color = color;
-
-        this.isPlayer = isPlayer;
 
         currentTarget = new Vector2(x, y);
     }
@@ -66,10 +63,7 @@ public class Entity : MonoBehaviour
                 x = (int)currentTarget.x;
         y = (int)currentTarget.y;
 
-        cbOnMove?.Invoke(this);
-
-        StartCoroutine(
-            LerpMove(currentTarget));
+        StartCoroutine(LerpMove(currentTarget));
     }
 
     private IEnumerator LerpMove(Vector2 target)
@@ -95,6 +89,29 @@ public class Entity : MonoBehaviour
         y = (int)currentTarget.y;
         transform.position = currentTarget;
         isMoving = false;
+        cbOnEndMove?.Invoke(this);
+    }
+
+    public void UpdateVisibilityColor()
+    {
+        TileVisibility v = map.tiles[map.GetIndex(x, y)].visibility;
+
+        Color selectedColor = color;
+        Color bgColor = backgroundSR.color;
+        if (v == TileVisibility.NotVisible ||
+            v == TileVisibility.PreviouslySeen)
+        {
+            selectedColor.a = 0;
+            entitySR.color = selectedColor;
+            bgColor.a = 0;
+            backgroundSR.color = bgColor;
+        }
+        else
+        {
+            entitySR.color = selectedColor;
+            bgColor.a = 255;
+            backgroundSR.color = bgColor;
+        }
     }
 
     public (int, int) GetPosition()
@@ -102,13 +119,13 @@ public class Entity : MonoBehaviour
         return (x, y);
     }
 
-    public void RegisterOnMove(Action<Entity> callbackfunc)
+    public void RegisterOnEndMove(Action<Entity> callbackfunc)
     {
-        cbOnMove += callbackfunc;
+        cbOnEndMove += callbackfunc;
     }
 
-    public void UnregisterOnMove(Action<Entity> callbackfunc)
+    public void UnregisterOnEndMove(Action<Entity> callbackfunc)
     {
-        cbOnMove -= callbackfunc;
+        cbOnEndMove -= callbackfunc;
     }
 }
