@@ -12,8 +12,11 @@ public class EntityManager : MonoBehaviour
     private List<Entity> entities;
     public Entity Player { get; private set; }
 
+    private EntityDatabase entityDatabase;
+
     public void InitializeEntities(GameMap gameMap, int seed)
     {
+        entityDatabase = FindAnyObjectByType<EntityDatabase>();
         entities = new List<Entity>();
         CreatePlayer(gameMap);
         CreateEntities(gameMap, seed);
@@ -23,10 +26,10 @@ public class EntityManager : MonoBehaviour
     {
         Player = Instantiate(entityPrefab, transform);
         Player.Init(
+            entityDatabase.player,
             gameMap.startingPosition,
-            spriteDatabase.GetPlayerSprite(),
-            ColorPalette.b1,
             gameMap,
+            this,
             true);
         _ = Player.AddComponent<PlayerController>();
         entities.Add(Player);
@@ -38,13 +41,24 @@ public class EntityManager : MonoBehaviour
         {
             (int, int) pos = gameMap.rooms[i].GetRandomPosition(seed);
 
-            Entity entity = Instantiate(
-                entityPrefab, transform);
-            entity.Init(
-                pos,
-                spriteDatabase.GetEnemySprite(),
-                ColorPalette.r2,
-                gameMap);
+            Entity entity = Instantiate(entityPrefab, transform);
+
+            if (Random.value > 0.8f)
+            {
+                entity.Init(
+                    entityDatabase.demon,
+                    pos,
+                    gameMap,
+                    this);
+            }
+            else
+            {
+                entity.Init(
+                    entityDatabase.cultist,
+                    pos,
+                    gameMap,
+                    this);
+            }
 
             entities.Add(entity);
         }
@@ -55,6 +69,32 @@ public class EntityManager : MonoBehaviour
         for (int i = 0; i < entities.Count; i++)
         {
             entities[i].UpdateVisibilityColor();
+        }
+    }
+
+    public Entity GetEntityAtLocation(int targetX, int targetY)
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            (int x, int y) = entities[i].GetPosition();
+            if (x == targetX &&
+                y == targetY)
+            {
+                return entities[i];
+            }
+        }
+
+        return null;
+    }
+
+    public void HandleEntityTurns()
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            Entity e = entities[i];
+            if (e.IsPlayer) { continue; }
+
+            Debug.Log("Entity #" + i.ToString() + "'s turn.");
         }
     }
 

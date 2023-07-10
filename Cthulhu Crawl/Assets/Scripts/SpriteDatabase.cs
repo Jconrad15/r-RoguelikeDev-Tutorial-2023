@@ -9,10 +9,6 @@ public class SpriteDatabase : MonoBehaviour
     public Sprite GetPlayerSprite() { return playerSprite; }
 
     [SerializeField]
-    private Sprite enemySprite;
-    public Sprite GetEnemySprite() { return enemySprite; }
-
-    [SerializeField]
     private Sprite wallSprite;
     [SerializeField]
     private Sprite floorSprite;

@@ -488,7 +488,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSprite: {fileID: -2099460166, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
-  enemySprite: {fileID: 300257880, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
   wallSprite: {fileID: -1845680687, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
   floorSprite: {fileID: 1874830490, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
 --- !u!4 &588100185
@@ -505,6 +504,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2086863510}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &812460723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 812460725}
+  - component: {fileID: 812460724}
+  m_Layer: 0
+  m_Name: EntityDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &812460724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812460723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01cbe2a4fde4f24b8e2411846eef9d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 11400000, guid: b37f47d2a0af8e84991f9c5c13aeb4e7, type: 2}
+  demon: {fileID: 11400000, guid: c487d4cecfe4a3140a61744b2eebfab6, type: 2}
+  cultist: {fileID: 11400000, guid: 213b1618132bc66458ac521e0d8c6f32, type: 2}
+--- !u!4 &812460725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812460723}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1306656852
 GameObject:

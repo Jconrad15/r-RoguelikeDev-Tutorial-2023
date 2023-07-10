@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Entity entity;
-
+    private Entity player;
+    
     private void Start()
     {
-        entity = GetComponent<Entity>();
+        player = GetComponent<Entity>();
     }
 
     private void Update()
     {
+        GetPlayerInput();
+
+    }
+
+    private void GetPlayerInput()
+    {
+        bool playerActed = false;
+
         bool left = Input.GetKeyDown(KeyCode.A);
         bool right = Input.GetKeyDown(KeyCode.D);
 
@@ -21,20 +29,28 @@ public class PlayerController : MonoBehaviour
 
         if (left)
         {
-            entity.Move(-1, 0);
+            player.ActInDirection(Direction.W);
+            playerActed = true;
         }
         else if (right)
         {
-            entity.Move(1, 0);
+            player.ActInDirection(Direction.E);
+            playerActed = true;
         }
         else if (up)
         {
-            entity.Move(0, 1);
+            player.ActInDirection(Direction.N);
+            playerActed = true;
         }
         else if (down)
         {
-            entity.Move(0, -1);
+            player.ActInDirection(Direction.S);
+            playerActed = true;
         }
 
+        if (playerActed)
+        {
+            player.entityManager.HandleEntityTurns();
+        }
     }
 }

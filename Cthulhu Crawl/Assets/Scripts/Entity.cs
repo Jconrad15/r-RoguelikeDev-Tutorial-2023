@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -14,24 +15,32 @@ public class Entity : MonoBehaviour
     [SerializeField]
     private SpriteRenderer backgroundSR;
 
+    public EntityManager entityManager;
+
     private int x;
     private int y;
     private Color color;
-    private bool isPlayer;
+    public bool IsPlayer { get; private set; }
+    private bool blocksMovement;
     private GameMap map;
+    private string entityName;
 
     private bool isMoving = false;
     private Vector2 currentTarget;
 
     public void Init(
-        (int, int) startingPosition, Sprite image, Color color,
-        GameMap map, bool isPlayer = false)
+        EntitySO entitySO, (int, int) startingPosition, 
+        GameMap map, EntityManager entityManager,
+        bool isPlayer = false)
     {
+        this.entityManager = entityManager;
         this.map = map;
-        entitySR.sprite = image;
-        this.color = color;
+        IsPlayer = isPlayer;
+        entitySR.sprite = entitySO.sprite;
+        color = entitySO.color;
         entitySR.color = color;
-        this.isPlayer = isPlayer;
+        blocksMovement = entitySO.blocksMovement;
+        entityName = entitySO.name;
 
         x = startingPosition.Item1;
         y = startingPosition.Item2;
@@ -47,8 +56,31 @@ public class Entity : MonoBehaviour
         SetToTargetPos();
     }
 
-    public void Move(int dx, int dy)
+    public void ActInDirection(Direction direction)
     {
+        int dx = 0;
+        int dy = 0;
+
+        switch (direction)
+        {
+            case Direction.N:
+                dx = 0;
+                dy = 1;
+                break;
+            case Direction.E:
+                dx = 1;
+                dy = 0;
+                break;
+            case Direction.S:
+                dx = 0;
+                dy = -1;
+                break;
+            case Direction.W:
+                dx = -1;
+                dy = 0;
+                break;
+        }
+
         if (isMoving)
         {
             SetToTargetPos();
@@ -59,8 +91,28 @@ public class Entity : MonoBehaviour
         int targetY = y + dy;
         if (map.IsWalkable(targetX, targetY) == false) { return; }
 
+        Entity targetTileEntity = 
+            entityManager.GetEntityAtLocation(targetX, targetY);
+        if (targetTileEntity == null)
+        {
+            MovementAction(targetX, targetY);
+        }
+        else
+        {
+            MeleeAction(targetTileEntity);
+        }
+
+    }
+
+    private void MeleeAction(Entity targetTileEntity)
+    {
+        Debug.Log("You kick the " + targetTileEntity.entityName);
+    }
+
+    private void MovementAction(int targetX, int targetY)
+    {
         currentTarget = new Vector2(targetX, targetY);
-                x = (int)currentTarget.x;
+        x = (int)currentTarget.x;
         y = (int)currentTarget.y;
 
         StartCoroutine(LerpMove(currentTarget));
