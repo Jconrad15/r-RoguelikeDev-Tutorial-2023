@@ -18,12 +18,24 @@ public class TurnManager : MonoBehaviour
 
     public void PlayerEndTurn()
     {
-        CurrentTurn = Turn.AI;
-        cbOnStartAITurn?.Invoke();
+        StartCoroutine(EndPlayerFrame());
     }
 
     public void AIEndTurn()
     {
+        StartCoroutine(EndAIFrame());
+    }
+
+    private IEnumerator EndPlayerFrame()
+    {
+        yield return new WaitForEndOfFrame();
+        CurrentTurn = Turn.AI;
+        cbOnStartAITurn?.Invoke();
+    }
+
+    private IEnumerator EndAIFrame()
+    {
+        yield return new WaitForEndOfFrame();
         CurrentTurn = Turn.Player;
         cbOnStartPlayerTurn?.Invoke();
     }

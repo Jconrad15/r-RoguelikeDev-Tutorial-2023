@@ -30,9 +30,8 @@ public class Fighter : MonoBehaviour
             {
                 value = MaxHealth;
             }
-            else if (currentHealth <= 0)
+            else if (value <= 0)
             {
-                value = 0;
                 Die();
             }
 
@@ -69,9 +68,9 @@ public class Fighter : MonoBehaviour
         if (targetTileEntity == null) { return false; }
 
         // Attack
-        if (targetTileEntity.TryGetComponent(out Fighter f))
+        if (targetTileEntity.TryGetComponent(out Fighter otherFighter))
         {
-            f.Damage(this);
+            otherFighter.Damage(this);
             return true;
         }
         else
@@ -87,7 +86,6 @@ public class Fighter : MonoBehaviour
 
         if (damage > 0)
         {
-            CurrentHealth -= damage;
             Debug.Log(
                 otherFighter.entity.EntityName
                 + " attacks "
@@ -95,6 +93,7 @@ public class Fighter : MonoBehaviour
                 + " for "
                 + damage.ToString()
                 + " damage.");
+            CurrentHealth -= damage;
         }
         else
         {
