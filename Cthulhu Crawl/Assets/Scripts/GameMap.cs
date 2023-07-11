@@ -102,4 +102,31 @@ public class GameMap
         return neighbors;
     }
 
+    public static (int, int) ConvertDirectionToDeltaCoord(
+        Direction dir)
+    {
+        int dx = 0;
+        int dy = 0;
+        switch (dir)
+        {
+            case Direction.N:
+                dx = 0;
+                dy = 1;
+                break;
+            case Direction.E:
+                dx = 1;
+                dy = 0;
+                break;
+            case Direction.S:
+                dx = 0;
+                dy = -1;
+                break;
+            case Direction.W:
+                dx = -1;
+                dy = 0;
+                break;
+        }
+        return (dx, dy);
+    }
+
 }

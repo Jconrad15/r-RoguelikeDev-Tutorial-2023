@@ -20,7 +20,28 @@ public class EntityManager : MonoBehaviour
         entityDatabase = FindAnyObjectByType<EntityDatabase>();
         entities = new List<Entity>();
         CreatePlayer(gameMap);
-        CreateEntities(gameMap, seed);
+        CreateCharacterEntities(gameMap, seed);
+        InitComponents();
+    }
+
+    private void InitComponents()
+    {
+        for (int i = 0; i < entities.Count; i++)
+        {
+            Entity e = entities[i];
+            if (e.TryGetComponent(out Mover mover))
+            {
+                mover.Init(e);
+            }
+            if (e.TryGetComponent(out AI ai))
+            {
+                ai.Init(e);
+            }
+            if (e.TryGetComponent(out Fighter fighter))
+            {
+                fighter.Init(100, 100, 10, 10, e);
+            }
+        }
     }
 
     private void CreatePlayer(GameMap gameMap)
@@ -33,16 +54,21 @@ public class EntityManager : MonoBehaviour
             this,
             true);
         _ = Player.AddComponent<PlayerController>();
+        _ = Player.AddComponent<Mover>();
+        _ = Player.AddComponent<Fighter>();
         entities.Add(Player);
     }
 
-    private void CreateEntities(GameMap gameMap, int seed)
+    private void CreateCharacterEntities(GameMap gameMap, int seed)
     {
         for (int i = 1; i < gameMap.rooms.Count; i++)
         {
             (int, int) pos = gameMap.rooms[i].GetRandomPosition(seed);
 
             Entity entity = Instantiate(entityPrefab, transform);
+            _ = entity.AddComponent<AI>();
+            _ = entity.AddComponent<Mover>();
+            _ = entity.AddComponent<Fighter>();
 
             if (Random.value > 0.8f)
             {
@@ -60,11 +86,6 @@ public class EntityManager : MonoBehaviour
                     gameMap,
                     this);
             }
-
-            // Add AI component to the entity
-            AI ai = entity.AddComponent<AI>();
-            ai.Init(entity);
-
             entities.Add(entity);
         }
     }
@@ -112,13 +133,13 @@ public class EntityManager : MonoBehaviour
         for (int i = 0; i < entities.Count; i++)
         {
             Entity e = entities[i];
-            if (e.TryGetComponent(out AI ai) == false) { continue; }
+            if (e.TryGetComponent(out Mover mover) == false) { continue; }
             Debug.Log("Entity #" + i.ToString() + "'s turn.");
 
             Tile playerTile = gameMap.TryGetTileAtCoord(
                 Player.GetPosition());
 
-            ai.GeneratePathToPlayer(playerTile);
+            mover.GeneratePathToPlayer(playerTile);
         }
     }
 

@@ -19,7 +19,8 @@ public class MapVisuals : MonoBehaviour
 
     public void InitializeVisuals()
     {
-        entityManager.Player.RegisterOnEndMove(UpdateVisuals);
+        entityManager.Player.GetComponent<Mover>()
+            .RegisterOnEndMove(UpdateVisuals);
         GameMap map = main.GetMap();
         FOVRecursive.DetermineVisibleTiles(
             map, entityManager.Player.GetPosition(), 6);

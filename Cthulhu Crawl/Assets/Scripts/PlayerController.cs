@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         GetPlayerInput();
-
     }
 
     private void GetPlayerInput()
