@@ -21,45 +21,28 @@ public class EntityManager : MonoBehaviour
         entities = new List<Entity>();
         CreatePlayer(gameMap);
         CreateCharacterEntities(gameMap, seed);
-        InitComponents();
-    }
-
-    private void InitComponents()
-    {
-        for (int i = 0; i < entities.Count; i++)
-        {
-            Entity e = entities[i];
-            if (e.TryGetComponent(out Mover mover))
-            {
-                mover.Init(e);
-            }
-            if (e.TryGetComponent(out AI ai))
-            {
-                ai.Init(e);
-            }
-            if (e.TryGetComponent(out Fighter fighter))
-            {
-                fighter.Init(100, 100, 10, 10, e);
-            }
-            if (e.TryGetComponent(out PlayerController playerController))
-            {
-                playerController.Init();
-            }
-        }
     }
 
     private void CreatePlayer(GameMap gameMap)
     {
         Player = Instantiate(entityPrefab, transform);
+        EntitySO playerEntitySO = entityDatabase.player;
         Player.Init(
-            entityDatabase.player,
+            playerEntitySO,
             gameMap.startingPosition,
             gameMap,
             this,
             true);
-        _ = Player.AddComponent<PlayerController>();
-        _ = Player.AddComponent<Mover>();
-        _ = Player.AddComponent<Fighter>();
+
+        Mover m = Player.AddComponent<Mover>();
+        m.Init(Player);
+
+        Fighter f = Player.AddComponent<Fighter>();
+        f.Init(playerEntitySO.fighterSO, Player);
+
+        PlayerController pc = Player.AddComponent<PlayerController>();
+        pc.Init();
+
         entities.Add(Player);
     }
 
@@ -70,26 +53,34 @@ public class EntityManager : MonoBehaviour
             (int, int) pos = gameMap.rooms[i].GetRandomPosition(seed);
 
             Entity entity = Instantiate(entityPrefab, transform);
-            _ = entity.AddComponent<AI>();
-            _ = entity.AddComponent<Mover>();
-            _ = entity.AddComponent<Fighter>();
 
+            EntitySO selectedEntitySO;
             if (Random.value > 0.8f)
             {
-                entity.Init(
-                    entityDatabase.demon,
-                    pos,
-                    gameMap,
-                    this);
+                selectedEntitySO = entityDatabase.demon;
             }
             else
             {
-                entity.Init(
-                    entityDatabase.cultist,
-                    pos,
-                    gameMap,
-                    this);
+                selectedEntitySO = entityDatabase.cultist;
             }
+
+            entity.Init(
+                selectedEntitySO,
+                pos,
+                gameMap,
+                this);
+
+            if (selectedEntitySO.fighterSO != null)
+            {
+                Fighter f = entity.AddComponent<Fighter>();
+                f.Init(selectedEntitySO.fighterSO, entity);
+            }
+
+            AI ai = entity.AddComponent<AI>();
+            ai.Init(entity);
+            Mover m = entity.AddComponent<Mover>();
+            m.Init(entity);
+
             entities.Add(entity);
         }
     }

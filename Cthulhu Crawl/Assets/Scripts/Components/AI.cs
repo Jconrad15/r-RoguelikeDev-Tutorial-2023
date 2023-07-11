@@ -49,7 +49,6 @@ public class AI : MonoBehaviour
             {
                 if (fighter.TryMeleeAction(d))
                 {
-                    Debug.Log("AI attacked");
                     return;
                 }
             }

@@ -10,4 +10,5 @@ public class EntitySO : ScriptableObject
     public Sprite sprite;
     public Color color;
     public bool blocksMovement;
+    public FighterSO fighterSO;
 }

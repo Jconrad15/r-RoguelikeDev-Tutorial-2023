@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Fighter : MonoBehaviour
@@ -10,7 +7,7 @@ public class Fighter : MonoBehaviour
     public int Defense { get; private set; }
     public int Power { get; private set; }
 
-    private int currentHealth;
+    private int currentHealth = 1;
     public int CurrentHealth
     {
         get => currentHealth;
@@ -20,9 +17,10 @@ public class Fighter : MonoBehaviour
             {
                 value = MaxHealth;
             }
-            else if (currentHealth < 0)
+            else if (currentHealth <= 0)
             {
                 value = 0;
+                Die();
             }
             currentHealth = value;
         }
@@ -30,14 +28,12 @@ public class Fighter : MonoBehaviour
 
     private Entity entity;
 
-    public void Init(
-        int maxHealth, int currentHealth,
-        int defense, int power, Entity entity)
+    public void Init(FighterSO fighterSO, Entity entity)
     {
-        MaxHealth = maxHealth;
-        CurrentHealth = currentHealth;
-        Defense = defense;
-        Power = power;
+        MaxHealth = fighterSO.maxHealth;
+        CurrentHealth = MaxHealth;
+        Defense = fighterSO.defense;
+        Power = fighterSO.power;
         this.entity = entity;
     }
 
@@ -53,7 +49,62 @@ public class Fighter : MonoBehaviour
             entity.entityManager.GetEntityAtLocation(targetX, targetY);
         if (targetTileEntity == null) { return false; }
 
-        return true;
+        // Attack
+        if (targetTileEntity.TryGetComponent(out Fighter f))
+        {
+            f.Damage(this);
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Other entity is not a fighter");
+            return false;
+        }
+
+    }
+
+    public void Damage(Fighter otherFighter)
+    {
+        int damage = otherFighter.Power - Defense;
+
+        if (damage > 0)
+        {
+            CurrentHealth -= damage;
+            Debug.Log(
+                otherFighter.entity.EntityName
+                + " attacks "
+                + entity.EntityName
+                + " for "
+                + damage.ToString()
+                + " damage.");
+        }
+        else
+        {
+            Debug.Log("No damage done.");
+        }
+    }
+
+    public void Die()
+    {
+        if (TryGetComponent(out AI ai))
+        {
+            Debug.Log(entity.EntityName + " is dead");
+            Destroy(ai);
+        }
+        else if (TryGetComponent(out PlayerController pc))
+        {
+            Debug.Log("You died");
+            Destroy(pc);
+        }
+
+        EntityDatabase database =
+            FindAnyObjectByType<EntityDatabase>();
+        entity.Init(
+            database.dead,
+            entity.GetPosition(),
+            entity.Map,
+            entity.entityManager);
+        Destroy(this);
     }
 
 }

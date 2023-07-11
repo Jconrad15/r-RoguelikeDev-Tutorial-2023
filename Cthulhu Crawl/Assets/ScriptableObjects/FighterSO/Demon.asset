@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 084c1446a6344f54f97a2f01eecee8a1, type: 3}
-  m_Name: Cultist
+  m_Script: {fileID: 11500000, guid: bad13c9e84410db4a95bdd23faee60f5, type: 3}
+  m_Name: Demon
   m_EditorClassIdentifier: 
-  characterName: Cultist
-  sprite: {fileID: -803910168, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
-  color: {r: 0.85882354, g: 0.3764706, b: 0.29803923, a: 1}
-  blocksMovement: 1
+  maxHealth: 16
+  defense: 1
+  power: 4

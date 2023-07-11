@@ -16,3 +16,4 @@ MonoBehaviour:
   sprite: {fileID: 1014070014, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
   color: {r: 0.69411767, g: 0.2, b: 0.3254902, a: 1}
   blocksMovement: 1
+  fighterSO: {fileID: 11400000, guid: 4bb472c6bb2a9674a8726f23b3f20c1d, type: 2}
