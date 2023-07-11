@@ -40,7 +40,10 @@ public class Mover : MonoBehaviour
             entity.entityManager.GetEntityAtLocation(targetX, targetY);
         if (targetTileEntity != null)
         {
-            return false;
+            if (targetTileEntity.BlocksMovement)
+            {
+                return false;
+            }
         }
 
         MovementAction(targetX, targetY);
@@ -62,7 +65,10 @@ public class Mover : MonoBehaviour
             entity.entityManager.GetEntityAtLocation(NextTile.position);
         if (targetTileEntity != null)
         {
-            return false;
+            if (targetTileEntity.BlocksMovement)
+            {
+                return false;
+            }
         }
 
         MovementAction(
