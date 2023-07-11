@@ -12,6 +12,7 @@ public class Mover : MonoBehaviour
     private Vector2 currentTarget;
     private Entity entity;
     private Path_AStar path;
+    public Tile NextTile { get; private set; }
 
     public void Init(Entity entity)
     {
@@ -46,10 +47,39 @@ public class Mover : MonoBehaviour
         return true;
     }
 
+    public bool TryMoveToNextTile()
+    {
+        if (IsMoving) { QuickFinishMovement(); }
+
+        // Check if tile is walkable
+        if (NextTile.isWalkable == false)
+        {
+            return false;
+        }
+
+        // Check if entity is in tile
+        Entity targetTileEntity =
+            entity.entityManager.GetEntityAtLocation(NextTile.position);
+        if (targetTileEntity != null)
+        {
+            return false;
+        }
+
+        MovementAction(
+            NextTile.position.Item1,
+            NextTile.position.Item2);
+        return true;
+    }
+
     private void MovementAction(int targetX, int targetY)
     {
         currentTarget = new Vector2(targetX, targetY);
         entity.SetPosition((int)currentTarget.x, (int)currentTarget.y);
+
+        if (entity.IsPlayer == false)
+        {
+            NextTile = path.Dequeue();
+        }
         StartCoroutine(LerpMove(currentTarget));
     }
 
@@ -90,7 +120,7 @@ public class Mover : MonoBehaviour
         return path.Dequeue();
     }
 
-    public void GeneratePathToPlayer(Tile targetTile)
+    public void GeneratePathToTargetTile(Tile targetTile)
     {
         (int x, int y) = entity.GetPosition();
         Tile currentTile = entity.Map.TryGetTileAtCoord(x, y);
@@ -98,6 +128,11 @@ public class Mover : MonoBehaviour
         path = new Path_AStar(
             currentTile, targetTile,
             entity.Map, entity.entityManager);
+
+        // Delete the first in the path, this is the current tile
+        _ = path.Dequeue();
+
+        NextTile = path.Dequeue();
     }
 
     public void RegisterOnEndMove(Action<Entity> callbackfunc)

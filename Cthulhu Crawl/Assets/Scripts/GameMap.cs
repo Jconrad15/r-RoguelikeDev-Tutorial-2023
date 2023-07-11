@@ -35,7 +35,7 @@ public class GameMap
 
         int index = GetIndex(x, y);
 
-        return tiles[index].walkable == true;
+        return tiles[index].isWalkable == true;
     }
 
     public int GetIndex(int x, int y)
@@ -100,6 +100,16 @@ public class GameMap
         };
 
         return neighbors;
+    }
+
+    public float GetDistanceBetweenTiles(Tile a, Tile b)
+    {
+        float distance =
+            Mathf.Sqrt(
+                Mathf.Pow(b.position.Item1 - a.position.Item1, 2)
+                + Mathf.Pow(b.position.Item2 - a.position.Item2, 2));
+
+        return distance;
     }
 
     public static (int, int) ConvertDirectionToDeltaCoord(

@@ -5,10 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Entity player;
-    
-    private void Start()
+    private Mover playerMover;
+    private Fighter playerFighter;
+
+    public void Init()
     {
         player = GetComponent<Entity>();
+        playerMover = GetComponent<Mover>();
+        playerFighter = GetComponent<Fighter>();
     }
 
     private void Update()
@@ -28,25 +32,62 @@ public class PlayerController : MonoBehaviour
 
         if (left)
         {
-            player.ActInDirection(Direction.W);
-            playerActed = true;
+            if (playerMover.TryMoveInDirection(Direction.W))
+            {
+                playerActed = true;
+            }
+            else
+            {
+                if (playerFighter.TryMeleeAction(Direction.W))
+                {
+                    playerActed = true;
+                }
+            }
         }
         else if (right)
         {
-            player.ActInDirection(Direction.E);
-            playerActed = true;
+            if (playerMover.TryMoveInDirection(Direction.E))
+            {
+                playerActed = true;
+            }
+            else
+            {
+                if (playerFighter.TryMeleeAction(Direction.E))
+                {
+                    playerActed = true;
+                }
+            }
         }
         else if (up)
         {
-            player.ActInDirection(Direction.N);
-            playerActed = true;
+            if (playerMover.TryMoveInDirection(Direction.N))
+            {
+                playerActed = true;
+            }
+            else
+            {
+                if (playerFighter.TryMeleeAction(Direction.N))
+                {
+                    playerActed = true;
+                }
+            }
         }
         else if (down)
         {
-            player.ActInDirection(Direction.S);
-            playerActed = true;
+            if (playerMover.TryMoveInDirection(Direction.S))
+            {
+                playerActed = true;
+            }
+            else
+            {
+                if (playerFighter.TryMeleeAction(Direction.S))
+                {
+                    playerActed = true;
+                }
+            }
         }
 
+        // End turn
         if (playerActed)
         {
             player.entityManager.HandleEntityTurns();

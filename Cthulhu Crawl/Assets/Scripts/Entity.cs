@@ -39,23 +39,6 @@ public class Entity : MonoBehaviour
         transform.position = new Vector3(x, y, 0);
     }
 
-    public void ActInDirection(Direction direction)
-    {
-        if (TryGetComponent(out Mover mover) == false)
-        {
-            return;
-        }
-
-        if (TryGetComponent(out Fighter fighter) == false)
-        {
-            return;
-        }
-
-        mover.TryMoveInDirection(direction);
-
-        fighter.MeleeAction(direction);
-    }
-
     public void UpdateVisibilityColor()
     {
         TileVisibility v = Map.tiles[Map.GetIndex(x, y)].visibility;

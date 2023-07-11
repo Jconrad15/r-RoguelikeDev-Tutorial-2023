@@ -41,6 +41,10 @@ public class EntityManager : MonoBehaviour
             {
                 fighter.Init(100, 100, 10, 10, e);
             }
+            if (e.TryGetComponent(out PlayerController playerController))
+            {
+                playerController.Init();
+            }
         }
     }
 
@@ -133,13 +137,8 @@ public class EntityManager : MonoBehaviour
         for (int i = 0; i < entities.Count; i++)
         {
             Entity e = entities[i];
-            if (e.TryGetComponent(out Mover mover) == false) { continue; }
-            Debug.Log("Entity #" + i.ToString() + "'s turn.");
-
-            Tile playerTile = gameMap.TryGetTileAtCoord(
-                Player.GetPosition());
-
-            mover.GeneratePathToPlayer(playerTile);
+            if (e.TryGetComponent(out AI AI) == false) { continue; }
+            AI.Act();
         }
     }
 

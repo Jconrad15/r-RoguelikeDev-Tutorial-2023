@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Fighter : MonoBehaviour
@@ -39,7 +41,7 @@ public class Fighter : MonoBehaviour
         this.entity = entity;
     }
 
-    public bool MeleeAction(Direction direction)
+    public bool TryMeleeAction(Direction direction)
     {
         (int dx, int dy) = GameMap.ConvertDirectionToDeltaCoord(direction);
         (int x, int y) = entity.GetPosition();
@@ -49,10 +51,9 @@ public class Fighter : MonoBehaviour
         // Check if entity is in tile
         Entity targetTileEntity =
             entity.entityManager.GetEntityAtLocation(targetX, targetY);
-        if (targetTileEntity != null) { return false; }
+        if (targetTileEntity == null) { return false; }
 
-        Debug.Log("You kick the fighter.");
-        return false;
+        return true;
     }
 
 }

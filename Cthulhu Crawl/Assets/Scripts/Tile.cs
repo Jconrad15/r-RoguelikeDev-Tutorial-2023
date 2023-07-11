@@ -4,7 +4,6 @@ public enum TileType { Wall, Floor };
 public enum TileVisibility { Visible, NotVisible, PreviouslySeen };
 public class Tile
 {
-    public bool walkable;
     public bool transparent;
     public Color foregroundColor;
     public Color backgroundColor;
@@ -21,7 +20,6 @@ public class Tile
         switch (tileType)
         {
             case TileType.Wall:
-                walkable = false;
                 transparent = false;
                 foregroundColor = ColorPalette.r3;
                 backgroundColor = Color.black;
@@ -29,7 +27,6 @@ public class Tile
                 break;
 
             case TileType.Floor:
-                walkable = true;
                 transparent = true;
                 foregroundColor = ColorPalette.r1;
                 backgroundColor = Color.black;
