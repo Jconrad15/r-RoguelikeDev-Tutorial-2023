@@ -14,6 +14,8 @@ public class TurnManager : MonoBehaviour
     public void Init()
     {
         CurrentTurn = Turn.Player;
+        DisplayMessageSystem.Instance.DisplayMessage(
+            "Making reality move in turns");
     }
 
     public void PlayerEndTurn()
