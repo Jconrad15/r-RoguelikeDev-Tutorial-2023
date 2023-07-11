@@ -10,6 +10,10 @@ public class Main : MonoBehaviour
     private GameMap gameMap;
     [SerializeField]
     private MapVisuals mapVisuals;
+    [SerializeField]
+    private UIManager uiManager;
+    [SerializeField]
+    private TurnManager turnManager;
 
     private int seed;
 
@@ -19,8 +23,9 @@ public class Main : MonoBehaviour
 
         InitializeMap();
         entityManager.InitializeEntities(gameMap, seed);
-
         mapVisuals.InitializeVisuals();
+        uiManager.Init();
+        turnManager.Init();
     }
 
     private void InitializeMap()

@@ -1,9 +1,22 @@
-using UnityEditor.SceneManagement;
+using System;
 using UnityEngine;
 
 public class Fighter : MonoBehaviour
 {
-    public int MaxHealth { get; private set; }
+    public Action<Fighter> cbOnCurrentHealthChanged;
+    public Action<Fighter> cbOnMaxHealthChanged;
+
+    private int maxHealth;
+    public int MaxHealth
+    {
+        get => maxHealth;
+        private set
+        {
+            maxHealth = value;
+            cbOnMaxHealthChanged?.Invoke(this);
+        }
+    }
+
     public int Defense { get; private set; }
     public int Power { get; private set; }
 
@@ -22,7 +35,13 @@ public class Fighter : MonoBehaviour
                 value = 0;
                 Die();
             }
+
+            int change = currentHealth - value;
             currentHealth = value;
+            if (change != 0)
+            {
+                cbOnCurrentHealthChanged?.Invoke(this);
+            }
         }
     }
 
@@ -60,7 +79,6 @@ public class Fighter : MonoBehaviour
             Debug.LogWarning("Other entity is not a fighter");
             return false;
         }
-
     }
 
     public void Damage(Fighter otherFighter)
@@ -107,4 +125,27 @@ public class Fighter : MonoBehaviour
         Destroy(this);
     }
 
+    public void RegisterOnCurrentHealthChanged(
+        Action<Fighter> callbackfunc)
+    {
+        cbOnCurrentHealthChanged += callbackfunc;
+    }
+
+    public void UnregisterOnCurrentHealthChanged(
+        Action<Fighter> callbackfunc)
+    {
+        cbOnCurrentHealthChanged -= callbackfunc;
+    }
+
+    public void RegisterOnMaxHealthChanged(
+        Action<Fighter> callbackfunc)
+    {
+        cbOnMaxHealthChanged += callbackfunc;
+    }
+
+    public void UnregisterOnMaxHealthChanged(
+        Action<Fighter> callbackfunc)
+    {
+        cbOnMaxHealthChanged -= callbackfunc;
+    }
 }

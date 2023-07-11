@@ -13,9 +13,13 @@ public class EntityManager : MonoBehaviour
     public Entity Player { get; private set; }
     private GameMap gameMap;
     private EntityDatabase entityDatabase;
+    private TurnManager turnManager;
 
     public void InitializeEntities(GameMap gameMap, int seed)
     {
+        turnManager = FindAnyObjectByType<TurnManager>();
+        turnManager.RegisterOnStartAITurn(OnStartAITurn);
+
         this.gameMap = gameMap;
         entityDatabase = FindAnyObjectByType<EntityDatabase>();
         entities = new List<Entity>();
@@ -123,7 +127,7 @@ public class EntityManager : MonoBehaviour
         return null;
     }
 
-    public void HandleEntityTurns()
+    private void OnStartAITurn()
     {
         for (int i = 0; i < entities.Count; i++)
         {
@@ -131,6 +135,8 @@ public class EntityManager : MonoBehaviour
             if (e.TryGetComponent(out AI AI) == false) { continue; }
             AI.Act();
         }
+
+        turnManager.AIEndTurn();
     }
 
 }

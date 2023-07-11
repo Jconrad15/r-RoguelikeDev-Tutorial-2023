@@ -80,7 +80,6 @@ public class AI : MonoBehaviour
         return (false, Direction.N);
     }
 
-
     private Tile GetPlayerTile()
     {
         return entity.Map.TryGetTileAtCoord(

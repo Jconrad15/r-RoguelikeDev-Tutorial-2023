@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Entity player;
     private Mover playerMover;
     private Fighter playerFighter;
 
+    private TurnManager turnManager;
+
     public void Init()
     {
-        player = GetComponent<Entity>();
         playerMover = GetComponent<Mover>();
         playerFighter = GetComponent<Fighter>();
+        turnManager = FindAnyObjectByType<TurnManager>();
     }
 
     private void Update()
     {
+        if (turnManager.CurrentTurn != Turn.Player) { return; }
         GetPlayerInput();
     }
 
@@ -90,7 +92,7 @@ public class PlayerController : MonoBehaviour
         // End turn
         if (playerActed)
         {
-            player.entityManager.HandleEntityTurns();
+            turnManager.PlayerEndTurn();
         }
     }
 }
