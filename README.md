@@ -13,3 +13,8 @@ The art assets are created by Kenney and can be found at https://kenney.nl/asset
 
 # Part 4 Field of View
 ![FieldOfView](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/FieldOfView.gif)
+
+# Parts 5-6 Combat
+![Combat](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/Combat.gif)
+
+
