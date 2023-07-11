@@ -86,7 +86,7 @@ public class Fighter : MonoBehaviour
 
         if (damage > 0)
         {
-            Debug.Log(
+            DisplayMessageSystem.Instance.DisplayMessage(
                 otherFighter.entity.EntityName
                 + " attacks "
                 + entity.EntityName
@@ -97,7 +97,8 @@ public class Fighter : MonoBehaviour
         }
         else
         {
-            Debug.Log("No damage done.");
+            DisplayMessageSystem.Instance.DisplayMessage(
+                "No damage done.");
         }
     }
 
@@ -105,12 +106,14 @@ public class Fighter : MonoBehaviour
     {
         if (TryGetComponent(out AI ai))
         {
-            Debug.Log(entity.EntityName + " is dead");
+            DisplayMessageSystem.Instance.DisplayMessage(
+                entity.EntityName + " is dead");
             Destroy(ai);
         }
         else if (TryGetComponent(out PlayerController pc))
         {
-            Debug.Log("You died");
+            DisplayMessageSystem.Instance.DisplayMessage(
+                "You died");
             Destroy(pc);
         }
 
