@@ -33,7 +33,12 @@ public class PlayerController : MonoBehaviour
         bool up = Input.GetKeyDown(KeyCode.W);
         bool down = Input.GetKeyDown(KeyCode.S);
 
-        bool space = Input.GetKeyDown(KeyCode.Space);
+        bool space = false;
+        if (Input.GetKeyDown(KeyCode.G) ||
+            Input.GetKeyDown(KeyCode.Space))
+        {
+            space = true;
+        }
 
         if (left)
         {
