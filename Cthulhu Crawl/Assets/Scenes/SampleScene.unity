@@ -777,6 +777,7 @@ GameObject:
   - component: {fileID: 911613828}
   - component: {fileID: 911613830}
   - component: {fileID: 911613829}
+  - component: {fileID: 911613831}
   m_Layer: 5
   m_Name: SideBarArea
   m_TagString: Untagged
@@ -826,7 +827,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd5970f840d3a9243a50927cc401c7ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c7f2c1b031b2376419e34f3af6531e8d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -844,6 +845,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911613827}
   m_CullTransparentMesh: 1
+--- !u!95 &911613831
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911613827}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d1f44e4a412ef144ba404b82f6d34f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1105422839
 GameObject:
   m_ObjectHideFlags: 0
