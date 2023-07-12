@@ -92,13 +92,15 @@ public class Fighter : MonoBehaviour
                 + entity.EntityName
                 + " for "
                 + damage.ToString()
-                + " damage.");
+                + " damage.",
+                ColorPalette.r2);
             CurrentHealth -= damage;
         }
         else
         {
             DisplayMessageSystem.Instance.DisplayMessage(
-                "No damage done.");
+                "No damage done.",
+                ColorPalette.b2);
         }
     }
 
@@ -107,13 +109,15 @@ public class Fighter : MonoBehaviour
         if (TryGetComponent(out AI ai))
         {
             DisplayMessageSystem.Instance.DisplayMessage(
-                entity.EntityName + " is dead");
+                entity.EntityName + " is dead",
+                ColorPalette.r2);
             Destroy(ai);
         }
         else if (TryGetComponent(out PlayerController pc))
         {
             DisplayMessageSystem.Instance.DisplayMessage(
-                "You died");
+                "You died",
+                ColorPalette.r2);
             Destroy(pc);
         }
 

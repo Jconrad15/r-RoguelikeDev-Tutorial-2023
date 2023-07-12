@@ -35,7 +35,8 @@ public class MapVisuals : MonoBehaviour
         entityManager.UpdateEntityVisibility();
 
         DisplayMessageSystem.Instance.DisplayMessage(
-            "World congealed from #####");
+            "World congealed from #####",
+            ColorPalette.r1);
     }
 
     public void UpdateVisuals(Entity player)

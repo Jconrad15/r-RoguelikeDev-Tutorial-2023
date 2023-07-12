@@ -15,7 +15,8 @@ public class TurnManager : MonoBehaviour
     {
         CurrentTurn = Turn.Player;
         DisplayMessageSystem.Instance.DisplayMessage(
-            "Making reality move in turns");
+            "Making reality move in turns",
+            ColorPalette.r1);
     }
 
     public void PlayerEndTurn()

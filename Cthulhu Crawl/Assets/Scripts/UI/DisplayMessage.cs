@@ -8,8 +8,9 @@ public class DisplayMessage : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI displayText;
 
-    public void Init(string message)
+    public void Init(string message, Color color)
     {
+        displayText.color = color;
         displayText.SetText(message);
     }
 

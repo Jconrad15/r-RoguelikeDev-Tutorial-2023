@@ -30,17 +30,17 @@ public class DisplayMessageSystem : MonoBehaviour
 
     private void Start()
     {
-        displayTextObject.SetActive(false);
+        displayTextObject.SetActive(true);
     }
 
-    public void DisplayMessage(string message)
+    public void DisplayMessage(string message, Color color)
     {
         displayTextObject.SetActive(true);
 
         GameObject displayGO = Instantiate(
             displayTextPrefab, displayTextObject.transform);
 
-        displayGO.GetComponent<DisplayMessage>().Init(message);
+        displayGO.GetComponent<DisplayMessage>().Init(message, color);
         messageQueue.Enqueue(displayGO);
 
         if (messageQueue.Count > maxMessage)
