@@ -11,10 +11,13 @@ The art assets are created by Kenney and can be found at https://kenney.nl/asset
 # Part 3 Generating a dungeon
 ![DungeonGeneration](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/DungeonGeneration.gif)
 
-# Part 4 Field of View
+# Part 4 Field of view
 ![FieldOfView](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/FieldOfView.gif)
 
 # Parts 5-6 Combat
 ![Combat](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/Combat.gif)
+
+# Parts 7 Creating the interface
+![Interface](https://github.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/blob/main/Cthulhu%20Crawl/Screenshots/Interface.gif)
 
 
