@@ -39,9 +39,24 @@ public class Entity : MonoBehaviour
         transform.position = new Vector3(x, y, 0);
     }
 
+    public void PlaceOnMapAtLocation((int, int) position)
+    {
+        x = position.Item1;
+        y = position.Item2;
+        transform.position = new Vector3(x, y, 0);
+    }
+
     public void UpdateVisibilityColor()
     {
-        TileVisibility v = Map.tiles[Map.GetIndex(x, y)].visibility;
+        TileVisibility v;
+        if (Map.InBounds(x, y))
+        {
+            v = Map.tiles[Map.GetIndex(x, y)].visibility;
+        }
+        else
+        {
+            v = TileVisibility.Visible;
+        }
 
         Color selectedColor = color;
         Color bgColor = backgroundSR.color;

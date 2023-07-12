@@ -122,13 +122,16 @@ public class Path_AStar
                 // increase the movement score, so that this entity
                 // is more likely to go around.
                 float entityScore = 0f;
-                Entity entityAtLocation =
-                    entityManager.GetEntityAtLocation(neighbor.data.position);
-                if (entityAtLocation != null)
+                List<Entity> entitiesAtLocation = entityManager
+                    .GetEntityAtLocation(neighbor.data.position);
+                if (entitiesAtLocation != null)
                 {
-                    if (entityAtLocation.BlocksMovement == true)
+                    for (int i = 0; i < entitiesAtLocation.Count; i++)
                     {
-                        entityScore += 10f;
+                        if (entitiesAtLocation[i].BlocksMovement == true)
+                        {
+                            entityScore += 10f;
+                        }
                     }
                 }
 

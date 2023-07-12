@@ -8,4 +8,6 @@ public class EntityDatabase : MonoBehaviour
     public EntitySO demon;
     public EntitySO cultist;
     public EntitySO dead;
+
+    public EntitySO HealingPotion;
 }

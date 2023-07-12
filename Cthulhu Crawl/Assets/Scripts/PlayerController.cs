@@ -6,13 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     private Mover playerMover;
     private Fighter playerFighter;
-
+    private Inventory playerInventory;
     private TurnManager turnManager;
 
     public void Init()
     {
         playerMover = GetComponent<Mover>();
         playerFighter = GetComponent<Fighter>();
+        playerInventory = GetComponent<Inventory>();
         turnManager = FindAnyObjectByType<TurnManager>();
     }
 
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
         bool up = Input.GetKeyDown(KeyCode.W);
         bool down = Input.GetKeyDown(KeyCode.S);
+
+        bool space = Input.GetKeyDown(KeyCode.Space);
 
         if (left)
         {
@@ -86,6 +89,19 @@ public class PlayerController : MonoBehaviour
                 {
                     playerActed = true;
                 }
+            }
+        }
+        else if (space)
+        {
+            if (playerInventory.TryPickupItem())
+            {
+                playerActed = true;
+            }
+            else
+            {
+                DisplayMessageSystem.Instance.DisplayMessage(
+                    "There is no item to pick up.",
+                    ColorPalette.r2);
             }
         }
 

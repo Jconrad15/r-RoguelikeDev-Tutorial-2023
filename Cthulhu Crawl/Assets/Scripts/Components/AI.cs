@@ -58,7 +58,8 @@ public class AI : MonoBehaviour
 
     private (bool, Direction) TryGetAttackableNeighbor()
     {
-        foreach (Direction d in (Direction[])Enum.GetValues(typeof(Direction)))
+        foreach (Direction d in
+            (Direction[])Enum.GetValues(typeof(Direction)))
         {
             (int dx, int dy) = GameMap.ConvertDirectionToDeltaCoord(d);
             (int x, int y) = entity.GetPosition();
@@ -66,13 +67,16 @@ public class AI : MonoBehaviour
             int targetY = y + dy;
 
             // Check if entity is in tile
-            Entity targetEntity =
+            List<Entity> targetEntities =
                 entity.entityManager.GetEntityAtLocation(targetX, targetY);
-            if (targetEntity != null)
+            if (targetEntities != null)
             {
-                if (targetEntity.IsPlayer)
+                for (int i = 0; i < targetEntities.Count; i++)
                 {
-                    return (true, d);
+                    if (targetEntities[i].IsPlayer)
+                    {
+                        return (true, d);
+                    }
                 }
             }
         }

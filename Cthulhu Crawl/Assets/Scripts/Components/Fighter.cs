@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 
 public class Fighter : MonoBehaviour
@@ -63,21 +65,22 @@ public class Fighter : MonoBehaviour
         int targetY = y + dy;
 
         // Check if entity is in tile
-        Entity targetTileEntity =
+        List<Entity> targetTileEntities =
             entity.entityManager.GetEntityAtLocation(targetX, targetY);
-        if (targetTileEntity == null) { return false; }
+        if (targetTileEntities == null) { return false; }
 
         // Attack
-        if (targetTileEntity.TryGetComponent(out Fighter otherFighter))
+        for (int i = 0; i < targetTileEntities.Count; i++)
         {
-            otherFighter.Damage(this);
-            return true;
+            if (targetTileEntities[i].TryGetComponent(
+                out Fighter otherFighter))
+            {
+                otherFighter.Damage(this);
+                return true;
+            }
         }
-        else
-        {
-            Debug.LogWarning("Other entity is not a fighter");
-            return false;
-        }
+
+        return false;
     }
 
     public void Damage(Fighter otherFighter)
@@ -102,6 +105,30 @@ public class Fighter : MonoBehaviour
                 "No damage done.",
                 ColorPalette.b2);
         }
+    }
+
+    public int Heal(int amount)
+    {
+        if (CurrentHealth == MaxHealth)
+        {
+            DisplayMessageSystem.Instance.DisplayMessage(
+                "Health is already full.",
+                ColorPalette.r3);
+            return 0;
+        }
+
+        int amountRecovered;
+        if (CurrentHealth + amount > MaxHealth)
+        {
+            amountRecovered = amount;
+        }
+        else
+        {
+            amountRecovered = MaxHealth - CurrentHealth;
+        }
+
+        CurrentHealth += amount;
+        return amountRecovered;
     }
 
     public void Die()

@@ -32,17 +32,23 @@ public class Mover : MonoBehaviour
         // Check if tile is walkable
         if (entity.Map.IsWalkable(targetX, targetY) == false)
         {
+            DisplayMessageSystem.Instance.DisplayMessage(
+                "That way is blocked.",
+                ColorPalette.r2);
             return false;
         }
 
         // Check if entity is in tile
-        Entity targetTileEntity =
+        List<Entity> targetTileEntities =
             entity.entityManager.GetEntityAtLocation(targetX, targetY);
-        if (targetTileEntity != null)
+        if (targetTileEntities != null)
         {
-            if (targetTileEntity.BlocksMovement)
+            for (int i = 0; i < targetTileEntities.Count; i++)
             {
-                return false;
+                if (targetTileEntities[i].BlocksMovement)
+                {
+                    return false;
+                }
             }
         }
 
@@ -61,13 +67,16 @@ public class Mover : MonoBehaviour
         }
 
         // Check if entity is in tile
-        Entity targetTileEntity =
+        List<Entity> targetTileEntities =
             entity.entityManager.GetEntityAtLocation(NextTile.position);
-        if (targetTileEntity != null)
+        if (targetTileEntities != null)
         {
-            if (targetTileEntity.BlocksMovement)
+            for(int i = 0;i < targetTileEntities.Count; i++)
             {
-                return false;
+                if (targetTileEntities[i].BlocksMovement)
+                {
+                    return false;
+                }
             }
         }
 

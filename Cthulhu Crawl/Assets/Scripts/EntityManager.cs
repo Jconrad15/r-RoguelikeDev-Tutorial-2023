@@ -25,11 +25,13 @@ public class EntityManager : MonoBehaviour
         entities = new List<Entity>();
         CreatePlayer(gameMap);
         CreateCharacterEntities(gameMap, seed);
+        CreateItemEntities(gameMap, seed);
     }
 
     private void CreatePlayer(GameMap gameMap)
     {
         Player = Instantiate(entityPrefab, transform);
+        Player.name = "Player";
         EntitySO playerEntitySO = entityDatabase.player;
         Player.Init(
             playerEntitySO,
@@ -44,6 +46,9 @@ public class EntityManager : MonoBehaviour
         Fighter f = Player.AddComponent<Fighter>();
         f.Init(playerEntitySO.fighterSO, Player);
 
+        Inventory inventory = Player.AddComponent<Inventory>();
+        inventory.Init(Player);
+
         PlayerController pc = Player.AddComponent<PlayerController>();
         pc.Init();
 
@@ -57,7 +62,7 @@ public class EntityManager : MonoBehaviour
             (int, int) pos = gameMap.rooms[i].GetRandomPosition(seed);
 
             Entity entity = Instantiate(entityPrefab, transform);
-
+            entity.name = "Character Entity #" + i.ToString();
             EntitySO selectedEntitySO;
             if (Random.value > 0.8f)
             {
@@ -89,6 +94,25 @@ public class EntityManager : MonoBehaviour
         }
     }
 
+    private void CreateItemEntities(GameMap gameMap, int seed)
+    {
+        for (int i = 1; i < gameMap.rooms.Count; i++)
+        {
+            (int, int) pos = gameMap.rooms[i].GetRandomPosition(seed);
+
+            Entity itemEntity = Instantiate(entityPrefab, transform);
+            itemEntity.name = "Item Entity #" + i.ToString();
+
+            EntitySO selectedEntitySO = entityDatabase.HealingPotion;
+            itemEntity.Init(
+                selectedEntitySO,
+                pos,
+                gameMap,
+                this);
+            entities.Add(itemEntity);
+        }
+    }
+
     public void UpdateEntityVisibility()
     {
         for (int i = 0; i < entities.Count; i++)
@@ -97,34 +121,25 @@ public class EntityManager : MonoBehaviour
         }
     }
 
-    public Entity GetEntityAtLocation(int targetX, int targetY)
+    public List<Entity> GetEntityAtLocation(int targetX, int targetY)
     {
+        List<Entity> foundEntities = new List<Entity>();
         for (int i = 0; i < entities.Count; i++)
         {
             (int x, int y) = entities[i].GetPosition();
             if (x == targetX &&
                 y == targetY)
             {
-                return entities[i];
+                foundEntities.Add(entities[i]);
             }
         }
 
-        return null;
+        return foundEntities;
     }
 
-    public Entity GetEntityAtLocation((int, int) targetPos)
+    public List<Entity> GetEntityAtLocation((int, int) targetPos)
     {
-        for (int i = 0; i < entities.Count; i++)
-        {
-            (int x, int y) = entities[i].GetPosition();
-            if (x == targetPos.Item1 &&
-                y == targetPos.Item2)
-            {
-                return entities[i];
-            }
-        }
-
-        return null;
+        return GetEntityAtLocation(targetPos.Item1, targetPos.Item2);
     }
 
     private void OnStartAITurn()

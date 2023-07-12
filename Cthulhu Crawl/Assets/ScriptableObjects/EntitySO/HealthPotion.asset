@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 084c1446a6344f54f97a2f01eecee8a1, type: 3}
-  m_Name: Dead
+  m_Name: HealthPotion
   m_EditorClassIdentifier: 
-  characterName: Dead
-  sprite: {fileID: -26479393, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
-  color: {r: 0.9647059, g: 0.85882354, b: 0.7294118, a: 1}
+  characterName: Health Potion
+  sprite: {fileID: 367690244, guid: ccbbaca9e46dcc54bb868f429b75daa5, type: 3}
+  color: {r: 0.45490196, g: 0.7882353, b: 0.61960787, a: 1}
   blocksMovement: 0
   fighterSO: {fileID: 0}

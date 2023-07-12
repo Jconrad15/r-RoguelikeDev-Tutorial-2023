@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 812460725}
   - component: {fileID: 812460724}
   m_Layer: 0
-  m_Name: Database
+  m_Name: Entity Database
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -615,6 +615,7 @@ MonoBehaviour:
   demon: {fileID: 11400000, guid: c487d4cecfe4a3140a61744b2eebfab6, type: 2}
   cultist: {fileID: 11400000, guid: 213b1618132bc66458ac521e0d8c6f32, type: 2}
   dead: {fileID: 11400000, guid: 033a4be41ab66f64ebf01c95fc72f76f, type: 2}
+  HealingPotion: {fileID: 11400000, guid: de10444c5c97ebd4896ef254a2b83308, type: 2}
 --- !u!4 &812460725
 Transform:
   m_ObjectHideFlags: 0
