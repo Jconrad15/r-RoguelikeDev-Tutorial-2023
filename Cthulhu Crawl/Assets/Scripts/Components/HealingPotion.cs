@@ -6,26 +6,25 @@ public class HealingPotion : Item
 {
     private int healAmount = 4;
 
-    public void Init()
+    public override bool TryActivate(Entity targetEntity)
     {
+        if (inInventory == false) { return false; }
 
-    }
-
-    public override void Activate(Entity targetEntity)
-    {
-        base.Activate(targetEntity);
-        
-        Fighter fighter = targetEntity.GetComponent<Fighter>();
-        if (fighter != null)
+        if (targetEntity.TryGetComponent<Fighter>(out var fighter))
         {
-            fighter.Heal(healAmount);
-            if (healAmount > 0)
+            int healedBy = fighter.Heal(healAmount);
+            if (healedBy > 0)
             {
                 DisplayMessageSystem.Instance.DisplayMessage(
-                    "Heal by " + healAmount.ToString(),
+                    "Heal by " + healedBy.ToString(),
                     ColorPalette.b2);
+                return true;
             }
         }
+
+        return false;
     }
+
+
 
 }

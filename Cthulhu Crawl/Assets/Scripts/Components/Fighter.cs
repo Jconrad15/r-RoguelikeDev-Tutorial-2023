@@ -37,7 +37,7 @@ public class Fighter : MonoBehaviour
                 Die();
             }
 
-            int change = currentHealth - value;
+            int change = Mathf.Abs(currentHealth - value);
             currentHealth = value;
             if (change != 0)
             {
@@ -120,14 +120,16 @@ public class Fighter : MonoBehaviour
         int amountRecovered;
         if (CurrentHealth + amount > MaxHealth)
         {
-            amountRecovered = amount;
+            amountRecovered = MaxHealth - CurrentHealth;
         }
         else
         {
-            amountRecovered = MaxHealth - CurrentHealth;
+            amountRecovered = Mathf.Min(
+                MaxHealth - CurrentHealth,
+                amount);
         }
 
-        CurrentHealth += amount;
+        CurrentHealth += amountRecovered;
         return amountRecovered;
     }
 

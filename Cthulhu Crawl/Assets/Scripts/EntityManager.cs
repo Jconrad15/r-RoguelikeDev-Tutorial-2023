@@ -109,6 +109,9 @@ public class EntityManager : MonoBehaviour
                 pos,
                 gameMap,
                 this);
+
+            _ = itemEntity.AddComponent<HealingPotion>();
+
             entities.Add(itemEntity);
         }
     }
@@ -152,6 +155,12 @@ public class EntityManager : MonoBehaviour
         }
 
         turnManager.AIEndTurn();
+    }
+
+    public void DestroyEntity(Entity entityToDestroy)
+    {
+        _ = entities.Remove(entityToDestroy);
+        Destroy(entityToDestroy.gameObject);
     }
 
 }

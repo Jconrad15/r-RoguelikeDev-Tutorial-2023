@@ -23,39 +23,50 @@ public class Inventory : MonoBehaviour
         (centerPoint, topRowY - rowOffsetY- rowOffsetY),
         (centerPoint - leftPointX + centerPoint, topRowY - rowOffsetY- rowOffsetY)
     };
-    private List<Entity> items;
+    private List<Entity> entityItems;
 
     public void Init(Entity entity)
     {
         this.entity = entity;
-        items = new List<Entity>();
+        entityItems = new List<Entity>();
     }
 
-    public void Drop(Entity item)
+    public void Drop(Entity entityItem)
     {
-        if (items.Contains(item) == false)
+        if (entityItems.Contains(entityItem) == false)
         {
             Debug.LogError("inventory does not have item");
             return;
         }
 
-        items.Remove(item);
+        entityItems.Remove(entityItem);
 
-        item.PlaceOnMapAtLocation(entity.GetPosition());
+        entityItem.PlaceOnMapAtLocation(entity.GetPosition());
         DisplayMessageSystem.Instance.DisplayMessage(
-            "You dropped the " + item.EntityName,
+            "You dropped the " + entityItem.EntityName,
             ColorPalette.b1);
 
-        for (int i = 0; i < items.Count; i++)
+        UpdateInventoryUI();
+    }
+
+    public void Remove(Entity entityItem)
+    {
+        entityItems.Remove(entityItem);
+        UpdateInventoryUI();
+    }
+
+    public void UpdateInventoryUI()
+    {
+        for (int i = 0; i < entityItems.Count; i++)
         {
-            items[i].PlaceOnUIAtLocation(
-                inventoryLocations[items.Count]);
+            entityItems[i].PlaceOnUIAtLocation(
+                inventoryLocations[i]);
         }
     }
 
     public bool TryPickupItem()
     {
-        if (items.Count >= capacity)
+        if (entityItems.Count >= capacity)
         {
             DisplayMessageSystem.Instance.DisplayMessage(
                 "Inventory full.",
@@ -74,11 +85,12 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < tileEntities.Count; i++)
         {
-            if (tileEntities[i].TryGetComponent(out Mover mover) == false)
+            if (tileEntities[i].TryGetComponent(out Item item))
             {
                 tileEntities[i].PlaceOnUIAtLocation(
-                    inventoryLocations[items.Count]);
-                items.Add(tileEntities[i]);
+                    inventoryLocations[entityItems.Count]);
+                entityItems.Add(tileEntities[i]);
+                item.MoveToInventory();
                 return true;
             }
         }
