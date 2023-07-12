@@ -6,19 +6,22 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     private Entity entity;
-
+    private static readonly float centerPoint = 32.25f;
+    private static readonly float leftPointX = 30.985f;
+    private static readonly float topRowY = 16f;
+    private static readonly float rowOffsetY = 1.22f;
     private int capacity = 9;
-    private (int, int)[] inventoryLocations = new (int, int)[9]
+    private (float, float)[] inventoryLocations = new (float, float)[9]
     {
-        (31, 16),
-        (32, 16),
-        (33, 16),
-        (31, 15),
-        (32, 15),
-        (33, 15),
-        (31, 14),
-        (32, 14),
-        (33, 14)
+        (leftPointX, topRowY),
+        (centerPoint, topRowY),
+        (centerPoint - leftPointX + centerPoint, topRowY),
+        (leftPointX, topRowY - rowOffsetY),
+        (centerPoint, topRowY - rowOffsetY),
+        (centerPoint - leftPointX + centerPoint, topRowY - rowOffsetY),
+        (leftPointX, topRowY - rowOffsetY- rowOffsetY),
+        (centerPoint, topRowY - rowOffsetY- rowOffsetY),
+        (centerPoint - leftPointX + centerPoint, topRowY - rowOffsetY- rowOffsetY)
     };
     private List<Entity> items;
 
@@ -45,7 +48,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < items.Count; i++)
         {
-            items[i].PlaceOnMapAtLocation(
+            items[i].PlaceOnUIAtLocation(
                 inventoryLocations[items.Count]);
         }
     }
@@ -73,7 +76,7 @@ public class Inventory : MonoBehaviour
         {
             if (tileEntities[i].TryGetComponent(out Mover mover) == false)
             {
-                tileEntities[i].PlaceOnMapAtLocation(
+                tileEntities[i].PlaceOnUIAtLocation(
                     inventoryLocations[items.Count]);
                 items.Add(tileEntities[i]);
                 return true;

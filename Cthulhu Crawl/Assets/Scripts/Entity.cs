@@ -46,6 +46,14 @@ public class Entity : MonoBehaviour
         transform.position = new Vector3(x, y, 0);
     }
 
+    public void PlaceOnUIAtLocation((float, float) position)
+    {
+        x = -1;
+        y = -1;
+        transform.position = new Vector3(
+            position.Item1, position.Item2, 0);
+    }
+
     public void UpdateVisibilityColor()
     {
         TileVisibility v;
