@@ -20,4 +20,7 @@ The art assets are created by Kenney and can be found at https://kenney.nl/asset
 # Parts 7 Creating the interface
 ![Interface](https://github.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/blob/main/Cthulhu%20Crawl/Screenshots/Interface.gif)
 
+# Part 8 Items and Inventory
+![ItemsAndInventory](https://raw.githubusercontent.com/Jconrad15/r-RoguelikeDev-Tutorial-2023/main/Cthulhu%20Crawl/Screenshots/Items%20and%20Inventory.gif)
+
 
