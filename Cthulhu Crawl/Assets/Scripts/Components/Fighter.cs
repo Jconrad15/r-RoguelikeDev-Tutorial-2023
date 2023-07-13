@@ -98,6 +98,11 @@ public class Fighter : MonoBehaviour
                 + " damage.",
                 ColorPalette.r2);
             CurrentHealth -= damage;
+
+            TextPopupManager.Instance.CreateTextPopup(
+                transform.position,
+                "-" + damage.ToString(),
+                ColorPalette.r2);
         }
         else
         {
@@ -130,6 +135,12 @@ public class Fighter : MonoBehaviour
         }
 
         CurrentHealth += amountRecovered;
+
+        TextPopupManager.Instance.CreateTextPopup(
+            transform.position,
+            "+" + amountRecovered.ToString(),
+            ColorPalette.b2);
+
         return amountRecovered;
     }
 

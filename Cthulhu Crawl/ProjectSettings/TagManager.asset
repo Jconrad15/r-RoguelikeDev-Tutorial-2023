@@ -44,3 +44,6 @@ TagManager:
   - name: Entities
     uniqueID: 1000041249
     locked: 0
+  - name: TextPopup
+    uniqueID: 2152532175
+    locked: 0
