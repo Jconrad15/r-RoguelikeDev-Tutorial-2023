@@ -37,6 +37,21 @@ public class Entity : MonoBehaviour
         x = startingPosition.Item1;
         y = startingPosition.Item2;
         transform.position = new Vector3(x, y, 0);
+
+        // Load from created character if this is the player entity
+        if (isPlayer)
+        {
+            CreatedCharacter cc = SceneBus.Instance.character;
+            Debug.Log(SceneBus.Instance.name);
+            if (cc == null)
+            {
+                Debug.LogWarning("cc");
+                return;
+            }
+            entitySR.sprite = cc.sprite;
+            EntityName = cc.characterName;
+        }
+
     }
 
     public void PlaceOnMapAtLocation((int, int) position)

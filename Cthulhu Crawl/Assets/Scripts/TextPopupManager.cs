@@ -7,13 +7,16 @@ public class TextPopupManager : MonoBehaviour
     [SerializeField]
     private GameObject textPopupPrefab;
 
-    public void CreateTextPopup(Vector2 position, string text, Color color)
+    public void CreateTextPopup(
+        Vector2 position, string text, Color color)
     {
         position.y += 1f;
         GameObject newTextPopup = Instantiate(textPopupPrefab);
-        newTextPopup.GetComponent<TextPopup>().Init(position, text, color);
+        newTextPopup.GetComponent<TextPopup>()
+            .Init(position, text, color);
     }
 
+    // Singleton
     public static TextPopupManager Instance { get; private set; }
     private void Awake()
     {
