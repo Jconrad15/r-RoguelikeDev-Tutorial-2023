@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     private Inventory playerInventory;
     private TurnManager turnManager;
 
+    private DialogueDisplayManager dialogueDisplayManager;
+
     public void Init()
     {
         playerMover = GetComponent<Mover>();
@@ -18,6 +20,8 @@ public class PlayerController : MonoBehaviour
         playerTalker = GetComponent<Talker>();
         playerInventory = GetComponent<Inventory>();
         turnManager = FindAnyObjectByType<TurnManager>();
+
+        dialogueDisplayManager = FindAnyObjectByType<DialogueDisplayManager>();
     }
 
     private void Update()
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.W))
             {
                 playerActed = true;
+                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -62,6 +67,7 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.E))
             {
                 playerActed = true;
+                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -76,6 +82,7 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.N))
             {
                 playerActed = true;
+                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -90,6 +97,7 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.S))
             {
                 playerActed = true;
+                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -104,6 +112,7 @@ public class PlayerController : MonoBehaviour
             if (playerInventory.TryPickupItem())
             {
                 playerActed = true;
+                dialogueDisplayManager.HideDialogue();
             }
             else
             {

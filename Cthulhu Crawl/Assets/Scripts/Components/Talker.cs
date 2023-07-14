@@ -39,10 +39,8 @@ public class Talker : MonoBehaviour
 
     public void TalkTo(Talker talkInitiator)
     {
-        Debug.Log(talkInitiator.entity.EntityName +
-            " talked to " +
-            entity.EntityName);
-        Debug.Log(dialogue);
+        FindAnyObjectByType<DialogueDisplayManager>()
+            .StartDialogue(dialogue);
     }
 
     private void GetPositionInDirection(
