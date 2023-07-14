@@ -11,21 +11,29 @@ public class EntityManager : MonoBehaviour
     private SpriteDatabase spriteDatabase;
     private List<Entity> entities;
     public Entity Player { get; private set; }
-    private GameMap gameMap;
+    public GameMap Map { get; private set; }
     private EntityDatabase entityDatabase;
     private TurnManager turnManager;
+    private DialogueGenerator dialogueGenerator;
 
     public void InitializeEntities(GameMap gameMap, int seed)
     {
-        turnManager = FindAnyObjectByType<TurnManager>();
-        turnManager.RegisterOnStartAITurn(OnStartAITurn);
-
-        this.gameMap = gameMap;
-        entityDatabase = FindAnyObjectByType<EntityDatabase>();
-        entities = new List<Entity>();
+        Setup(gameMap);
         CreatePlayer(gameMap);
         CreateCharacterEntities(gameMap, seed);
         CreateItemEntities(gameMap, seed);
+    }
+
+    private void Setup(GameMap gameMap)
+    {
+        dialogueGenerator = FindAnyObjectByType<DialogueGenerator>();
+
+        turnManager = FindAnyObjectByType<TurnManager>();
+        turnManager.RegisterOnStartAITurn(OnStartAITurn);
+
+        Map = gameMap;
+        entityDatabase = FindAnyObjectByType<EntityDatabase>();
+        entities = new List<Entity>();
     }
 
     private void CreatePlayer(GameMap gameMap)
@@ -36,7 +44,6 @@ public class EntityManager : MonoBehaviour
         Player.Init(
             playerEntitySO,
             gameMap.startingPosition,
-            gameMap,
             this,
             true);
 
@@ -48,6 +55,9 @@ public class EntityManager : MonoBehaviour
 
         Inventory inventory = Player.AddComponent<Inventory>();
         inventory.Init(Player);
+
+        Talker talker = Player.AddComponent<Talker>();
+        talker.Init(Player, null);
 
         PlayerController pc = Player.AddComponent<PlayerController>();
         pc.Init();
@@ -73,11 +83,7 @@ public class EntityManager : MonoBehaviour
                 selectedEntitySO = entityDatabase.cultist;
             }
 
-            entity.Init(
-                selectedEntitySO,
-                pos,
-                gameMap,
-                this);
+            entity.Init(selectedEntitySO, pos, this);
 
             if (selectedEntitySO.fighterSO != null)
             {
@@ -89,6 +95,9 @@ public class EntityManager : MonoBehaviour
             ai.Init(entity);
             Mover m = entity.AddComponent<Mover>();
             m.Init(entity);
+            Talker t = entity.AddComponent<Talker>();
+            string dialogue = dialogueGenerator.GetDialogue(entity);
+            t.Init(entity, dialogue);
 
             entities.Add(entity);
         }
@@ -104,11 +113,7 @@ public class EntityManager : MonoBehaviour
             itemEntity.name = "Item Entity #" + i.ToString();
 
             EntitySO selectedEntitySO = entityDatabase.HealingPotion;
-            itemEntity.Init(
-                selectedEntitySO,
-                pos,
-                gameMap,
-                this);
+            itemEntity.Init(selectedEntitySO, pos, this);
 
             _ = itemEntity.AddComponent<HealingPotion>();
 

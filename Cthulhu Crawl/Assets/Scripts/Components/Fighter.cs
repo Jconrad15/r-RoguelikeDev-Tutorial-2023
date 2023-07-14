@@ -166,7 +166,6 @@ public class Fighter : MonoBehaviour
         entity.Init(
             database.dead,
             entity.GetPosition(),
-            entity.Map,
             entity.entityManager);
         Destroy(this);
     }

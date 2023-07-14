@@ -17,16 +17,14 @@ public class Entity : MonoBehaviour
     private Color color;
     public bool IsPlayer { get; private set; }
     public bool BlocksMovement { get; private set; }
-    public GameMap Map { get; private set; }
     public string EntityName { get; private set; }
 
     public void Init(
         EntitySO entitySO, (int, int) startingPosition, 
-        GameMap map, EntityManager entityManager,
+        EntityManager entityManager,
         bool isPlayer = false)
     {
         this.entityManager = entityManager;
-        Map = map;
         IsPlayer = isPlayer;
         entitySR.sprite = entitySO.sprite;
         color = entitySO.color;
@@ -41,6 +39,8 @@ public class Entity : MonoBehaviour
         // Load from created character if this is the player entity
         if (isPlayer)
         {
+            if (SceneBus.Instance == null) { return; }
+
             CreatedCharacter cc = SceneBus.Instance.character;
             Debug.Log(SceneBus.Instance.name);
             if (cc == null)
@@ -72,9 +72,10 @@ public class Entity : MonoBehaviour
     public void UpdateVisibilityColor()
     {
         TileVisibility v;
-        if (Map.InBounds(x, y))
+        if (entityManager.Map.InBounds(x, y))
         {
-            v = Map.tiles[Map.GetIndex(x, y)].visibility;
+            v = entityManager.Map.tiles[
+                entityManager.Map.GetIndex(x, y)].visibility;
         }
         else
         {

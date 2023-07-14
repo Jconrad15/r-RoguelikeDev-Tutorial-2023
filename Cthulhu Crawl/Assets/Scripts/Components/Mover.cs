@@ -30,7 +30,7 @@ public class Mover : MonoBehaviour
         int targetY = y + dy;
         
         // Check if tile is walkable
-        if (entity.Map.IsWalkable(targetX, targetY) == false)
+        if (entity.entityManager.Map.IsWalkable(targetX, targetY) == false)
         {
             DisplayMessageSystem.Instance.DisplayMessage(
                 "That way is blocked.",
@@ -138,11 +138,12 @@ public class Mover : MonoBehaviour
     public void GeneratePathToTargetTile(Tile targetTile)
     {
         (int x, int y) = entity.GetPosition();
-        Tile currentTile = entity.Map.TryGetTileAtCoord(x, y);
+        Tile currentTile = entity.entityManager.Map
+            .TryGetTileAtCoord(x, y);
 
         path = new Path_AStar(
             currentTile, targetTile,
-            entity.Map, entity.entityManager);
+            entity.entityManager.Map, entity.entityManager);
 
         // Delete the first in the path, this is the current tile
         _ = path.Dequeue();

@@ -41,7 +41,7 @@ public class AI : MonoBehaviour
             }
         }
 
-        if (TryGetComponent(out Fighter fighter))
+/*        if (TryGetComponent(out Fighter fighter))
         {
             (bool attackableNeighbor, Direction d)
                 = TryGetAttackableNeighbor();
@@ -52,7 +52,7 @@ public class AI : MonoBehaviour
                     return;
                 }
             }
-        }
+        }*/
         Debug.Log("AI did nothing");
     }
 
@@ -86,13 +86,14 @@ public class AI : MonoBehaviour
 
     private Tile GetPlayerTile()
     {
-        return entity.Map.TryGetTileAtCoord(
+        return entity.entityManager.Map.TryGetTileAtCoord(
             entity.entityManager.Player.GetPosition());
     }
 
     private Tile GetLocalTile()
     {
-        return entity.Map.TryGetTileAtCoord(entity.GetPosition());
+        return entity.entityManager.Map
+            .TryGetTileAtCoord(entity.GetPosition());
     }
 
 }

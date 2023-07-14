@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Mover playerMover;
     private Fighter playerFighter;
+    private Talker playerTalker;
+
     private Inventory playerInventory;
     private TurnManager turnManager;
 
@@ -13,6 +15,7 @@ public class PlayerController : MonoBehaviour
     {
         playerMover = GetComponent<Mover>();
         playerFighter = GetComponent<Fighter>();
+        playerTalker = GetComponent<Talker>();
         playerInventory = GetComponent<Inventory>();
         turnManager = FindAnyObjectByType<TurnManager>();
     }
@@ -48,7 +51,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (playerFighter.TryMeleeAction(Direction.W))
+                if (playerTalker.TryTalkAction(Direction.W))
                 {
                     playerActed = true;
                 }
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (playerFighter.TryMeleeAction(Direction.E))
+                if (playerTalker.TryTalkAction(Direction.E))
                 {
                     playerActed = true;
                 }
@@ -76,7 +79,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (playerFighter.TryMeleeAction(Direction.N))
+                if (playerTalker.TryTalkAction(Direction.N))
                 {
                     playerActed = true;
                 }
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                if (playerFighter.TryMeleeAction(Direction.S))
+                if (playerTalker.TryTalkAction(Direction.S))
                 {
                     playerActed = true;
                 }
