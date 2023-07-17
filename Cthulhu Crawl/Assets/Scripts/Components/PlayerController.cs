@@ -47,6 +47,24 @@ public class PlayerController : MonoBehaviour
             space = true;
         }
 
+        if (ModeController.Instance.CurrentMode == Mode.Exploration)
+        {
+            playerActed = ProcessPlayerMovement(
+                left, right, up, down, space);
+        }
+
+        // End turn
+        if (playerActed)
+        {
+            turnManager.PlayerEndTurn();
+        }
+    }
+
+    private bool ProcessPlayerMovement(
+        bool left, bool right, bool up, bool down, bool space)
+    {
+        bool playerActed = false;
+
         if (left)
         {
             if (playerMover.TryMoveInDirection(Direction.W))
@@ -122,10 +140,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // End turn
-        if (playerActed)
-        {
-            turnManager.PlayerEndTurn();
-        }
+        return playerActed;
     }
 }
