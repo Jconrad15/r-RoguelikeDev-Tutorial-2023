@@ -96,7 +96,7 @@ public class EntityManager : MonoBehaviour
             Mover m = entity.AddComponent<Mover>();
             m.Init(entity);
             Talker t = entity.AddComponent<Talker>();
-            string dialogue = dialogueGenerator.GetDialogue(entity);
+            Dialogue dialogue = dialogueGenerator.GetDialogue(entity);
             t.Init(entity, dialogue);
 
             entities.Add(entity);

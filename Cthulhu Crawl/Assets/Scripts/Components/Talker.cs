@@ -5,12 +5,12 @@ using UnityEngine;
 public class Talker : MonoBehaviour
 {
     private Entity entity;
-    private string dialogue;
+    public Dialogue Dialogue { get; private set; }
 
-    public void Init(Entity entity, string dialogue)
+    public void Init(Entity entity, Dialogue dialogue)
     {
         this.entity = entity;
-        this.dialogue = dialogue;
+        Dialogue = dialogue;
     }
 
     public bool TryTalkAction(Direction direction)
@@ -40,7 +40,7 @@ public class Talker : MonoBehaviour
     public void TalkTo(Talker talkInitiator)
     {
         FindAnyObjectByType<DialogueDisplayManager>()
-            .StartDialogue(dialogue);
+            .StartDialogue(talkInitiator, this);
     }
 
     private void GetPositionInDirection(
@@ -51,4 +51,5 @@ public class Talker : MonoBehaviour
         targetX = x + dx;
         targetY = y + dy;
     }
+
 }

@@ -12,16 +12,17 @@ public class DialogueDisplayManager : MonoBehaviour
 
     private void Start()
     {
-        HideDialogue();
+        EndDialogue();
     }
 
-    public void StartDialogue(string text)
+    public void StartDialogue(Talker playerTalker, Talker otherTalker)
     {
+        ModeController.Instance.SwitchMode(Mode.Dialogue);
         dialogueArea.SetActive(true);
-        dialogueText.SetText(text);
+        dialogueText.SetText(otherTalker.Dialogue.text);
     }
 
-    public void HideDialogue()
+    public void EndDialogue()
     {
         dialogueArea.SetActive(false);
     }

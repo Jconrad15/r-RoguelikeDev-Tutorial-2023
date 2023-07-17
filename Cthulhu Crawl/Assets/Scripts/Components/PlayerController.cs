@@ -52,6 +52,11 @@ public class PlayerController : MonoBehaviour
             playerActed = ProcessPlayerMovement(
                 left, right, up, down, space);
         }
+        else if (ModeController.Instance.CurrentMode == Mode.Dialogue)
+        {
+            ProcessPlayerDialogue(
+                left, right, up, down, space);
+        }
 
         // End turn
         if (playerActed)
@@ -59,6 +64,17 @@ public class PlayerController : MonoBehaviour
             turnManager.PlayerEndTurn();
         }
     }
+
+    private void ProcessPlayerDialogue(
+        bool left, bool right, bool up, bool down, bool space)
+    {
+        if (left || right || up || down)
+        {
+            ModeController.Instance.SwitchMode(Mode.Exploration);
+        }
+
+    }
+
 
     private bool ProcessPlayerMovement(
         bool left, bool right, bool up, bool down, bool space)
@@ -70,7 +86,6 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.W))
             {
                 playerActed = true;
-                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -85,7 +100,6 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.E))
             {
                 playerActed = true;
-                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -100,7 +114,6 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.N))
             {
                 playerActed = true;
-                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -115,7 +128,6 @@ public class PlayerController : MonoBehaviour
             if (playerMover.TryMoveInDirection(Direction.S))
             {
                 playerActed = true;
-                dialogueDisplayManager.HideDialogue();
             }
             else
             {
@@ -130,7 +142,6 @@ public class PlayerController : MonoBehaviour
             if (playerInventory.TryPickupItem())
             {
                 playerActed = true;
-                dialogueDisplayManager.HideDialogue();
             }
             else
             {
